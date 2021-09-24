@@ -1,6 +1,6 @@
 # ReproRes 2021
 
-## Class 01
+## Class 01 (2021-09-24)
 
 ### Pre-class 
 
