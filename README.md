@@ -16,7 +16,8 @@
 
 ### After Class
 
-- Read Chapters 1 and 2
+- Read [Chapter 1: Getting Started](https://psyteachr.github.io/reprores-v2/intro.html) 
+- Read [Chapter 2: Reproducible Workflows](https://psyteachr.github.io/reprores-v2/repro.html)
 - Watch the associated videos (if you need further clarification)
-- Complete the formative assessments for  chapters 1 and 2
-- Complete the (optional) data skills self-assessment
+- Complete the [exercises](https://psyteachr.github.io/reprores-v2/exercises.html) for  chapters 1 and 2
+- Complete the (optional) [data skills self-assessment](https://moodle.gla.ac.uk/mod/assign/view.php?id=2487849)
