@@ -4,8 +4,8 @@
 
 ### Pre-class 
 
-- Fill out the poll at https://forms.gle/1EY8WcHKyXQvxqMz9
-- Find the book at https://psyteachr.github.io/reprores-v2/
+- Fill out the [pre-class poll](https://forms.gle/1EY8WcHKyXQvxqMz9)
+- Open the [class book](https://psyteachr.github.io/reprores-v2/)
 - Start up RStudio
 
 ### In-Class
