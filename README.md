@@ -10,6 +10,7 @@
 
 ### In-Class
 
+- Start at 10:05
 - Discuss the class syllabus
 - Discuss the data skills self-assessment
 - Chapter 1 overview
