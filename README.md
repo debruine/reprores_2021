@@ -6,11 +6,12 @@
 
 - Fill out the [pre-class poll](https://forms.gle/1EY8WcHKyXQvxqMz9)
 - Open the [class book](https://psyteachr.github.io/reprores-v2/)
+- Fix your [Zoom profile](https://uofglasgow.zoom.us/profile?from=client) (correct name, profoile pic)
 - Start up RStudio
 
 ### In-Class
 
-- Start at 10:05
+- Start at 10:05 (remind Lisa to start recording!)
 - Discuss the class syllabus
 - Discuss the data skills self-assessment
 - Chapter 1 overview
