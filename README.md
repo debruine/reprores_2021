@@ -6,7 +6,7 @@
 
 - Fill out the [pre-class poll](https://forms.gle/1EY8WcHKyXQvxqMz9)
 - Open the [class book](https://psyteachr.github.io/reprores-v2/)
-- Fix your [Zoom profile](https://uofglasgow.zoom.us/profile?from=client) (correct name, profoile pic)
+- Fix your [Zoom profile](https://uofglasgow.zoom.us/profile?from=client) (correct name, profile pic)
 - Start up RStudio
 
 ### In-Class
