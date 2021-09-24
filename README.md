@@ -2,6 +2,8 @@
 
 ## Class 01 (2021-09-24)
 
+[Recording](https://uofglasgow.zoom.us/rec/share/V1exB4gAu6Q-hZrEhv9NScaXoUw9aijGsQHnXQf8YDvZmPEIqXCdAVrfWgmanWUq.NKVM6RbYlU0nFzhK): check the Teams channel for the recording passcode
+
 ### Pre-class 
 
 - Fill out the [pre-class poll](https://forms.gle/1EY8WcHKyXQvxqMz9)
