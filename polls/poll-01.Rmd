@@ -21,6 +21,7 @@ library(tidyverse)
 library(googlesheets4)
 options(gargle_oauth_email = "debruine@gmail.com")
 library(ggthemes)
+library(see)
 library(ggwordcloud) # for word clouds
 library(tidytext) # for manipulating text for word clouds
 ```
@@ -38,11 +39,15 @@ scale_colour <- scale_colour_economist(drop=FALSE)
 ```
 
 
+
 ```{r}
 # read data
 url <- "https://docs.google.com/spreadsheets/d/1mZlGcQecowigXVUN_0HsnLPEpSaE0tXfoCfw6Lvv2vQ/edit?resourcekey#gid=902664824"
-data <- read_sheet(url)
+data <- read_sheet(url) %>%
+  filter(row_number() != 1)
 ```
+
+`r nrow(data)` Participants
 
 Column {data-width=300}
 -----------------------------------------------------------------------
@@ -60,17 +65,17 @@ ggplot(programme, aes(x = programme)) +
            fill = scale_fill$palette(3)[[1]]) +
   scale_x_discrete(name = "", drop=FALSE, 
                    guide = guide_axis(n.dodge = 2)) +
-  scale_y_continuous(name = "", breaks = 0:10*5) +
-  coord_cartesian(ylim= c(0, 20)) +
+  scale_y_continuous(name = "", breaks = 0:11*5) +
   scale_fill
 ```
 
 ### What are you hoping to learn from this class?
 
 ```{r}
-omitted <- c(stop_words$word, 0:9)
+omitted <- c(stop_words$word, "im", 0:9)
 
 words <- select(data, hope = 10) %>%
+  filter(!is.na(hope)) %>%
   unnest_tokens(output = "word", input = "hope") %>%
   count(word) %>%
   filter(!word %in% omitted) %>%
@@ -78,9 +83,9 @@ words <- select(data, hope = 10) %>%
 
 ggplot(words, aes(label = word, colour = word, size = n)) +
   geom_text_wordcloud_area() +
-  scale_size_area(max_size = 10) +
+  scale_size_area(max_size = 16) +
   theme_minimal(base_size = 14) +
-  scale_colour
+  scale_color_see_d(palette = "ice") 
 ```
 
 Column {data-width=300}
@@ -101,15 +106,17 @@ ggplot(experience, aes(x = rating, fill = question)) +
   geom_bar(show.legend = F) +
   facet_wrap(~question, ncol = 1) +
   scale_x_discrete(name = "",  drop=FALSE) +
-  scale_y_continuous(name = "", breaks = 0:10*5) +
-  coord_cartesian(ylim= c(0, 20)) +
+  scale_y_continuous(name = "", breaks = 0:11*5) +
   scale_fill
 ```
 
 ### Playlist Suggestions
 
 ```{r}
-DT::datatable(data[, 11], colnames = "", rownames = FALSE)
+data[, 11] %>%
+  rename(song = 1) %>%
+  filter(!is.na(song)) %>%
+  DT::datatable(colnames = "", rownames = FALSE)
 ```
 
 
@@ -139,9 +146,9 @@ ggplot(feelings, aes(x = feelings)) +
   geom_bar(show.legend = FALSE,
            fill = scale_fill$palette(3)[[2]]) +
   scale_x_discrete(name = "",  drop=FALSE) +
-  scale_y_continuous(name = "", breaks = 0:10*5) +
+  scale_y_continuous(name = "", breaks = 0:11*5) +
   scale_fill +
-  coord_flip(ylim = c(0, 20)) 
+  coord_flip(ylim = c(0, 55)) 
 ```
 
 ### Check what you've completed
