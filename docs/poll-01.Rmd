@@ -42,8 +42,8 @@ scale_colour <- scale_colour_economist(drop=FALSE)
 
 ```{r}
 # read data
-url <- "https://docs.google.com/spreadsheets/d/1mZlGcQecowigXVUN_0HsnLPEpSaE0tXfoCfw6Lvv2vQ/edit?resourcekey#gid=902664824"
-data <- read_sheet(url) %>%
+url <- "1mZlGcQecowigXVUN_0HsnLPEpSaE0tXfoCfw6Lvv2vQ"
+data <- read_sheet(url, sheet = "Week1") %>%
   filter(row_number() != 1)
 ```
 

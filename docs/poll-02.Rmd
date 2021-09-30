@@ -1,0 +1,185 @@
+---
+title: "ReproRes Poll Class 02"
+output: 
+  flexdashboard::flex_dashboard:
+    orientation: columns
+    vertical_layout: fill
+    theme: yeti
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  echo = FALSE,
+  message = FALSE,
+  warning = FALSE,
+  fig.width = 10,
+  fig.height = 5
+)
+
+# [Poll](https://forms.gle/1EY8WcHKyXQvxqMz9)
+
+library(flexdashboard)
+library(tidyverse)
+library(googlesheets4)
+options(gargle_oauth_email = "debruine@gmail.com")
+library(ggthemes)
+library(see)
+library(ggwordcloud) # for word clouds
+library(tidytext) # for manipulating text for word clouds
+```
+
+```{r, eval = TRUE}
+theme_set(theme_fivethirtyeight(base_size = 24))
+scale_fill <- scale_fill_fivethirtyeight(drop=FALSE)
+scale_colour <- scale_colour_fivethirtyeight(drop=FALSE)
+```
+
+```{r}
+# read data
+url <- "1mZlGcQecowigXVUN_0HsnLPEpSaE0tXfoCfw6Lvv2vQ"
+data <- read_sheet(url, sheet = "Week2") %>%
+  filter(row_number() != 0)
+
+
+engage <- c(book = "Read the book", 
+            videos = "Watched the videos", 
+            exercise = "Did the formative exercise",
+            none = "I didn't get a chance this week")
+```
+
+`r nrow(data)` Participants
+
+Column {data-width=300}
+-----------------------------------------------------------------------
+
+### How did you engage with Chapter 1?
+
+```{r, fig.height=7}
+ch1 <- select(data, ch1 = 2) %>%
+  separate_rows(ch1, sep = ", ") %>%
+  mutate(ch1 = factor(ch1, rev(engage), rev(names(engage))))
+
+ggplot(ch1, aes(x = ch1)) +
+  geom_bar(show.legend = FALSE,
+           fill = scale_fill$palette(3)[[1]]) +
+  scale_x_discrete(name = "",  drop=FALSE) +
+  scale_y_continuous(name = "", breaks = 0:11*5) +
+  scale_fill +
+  coord_flip(ylim = c(0, 55)) 
+```
+
+### How did you engage with Chapter 2?
+
+```{r, fig.height=7}
+ch2 <- select(data, ch2 = 3) %>%
+  separate_rows(ch2, sep = ", ") %>%
+  mutate(ch2 = factor(ch2, rev(engage), rev(names(engage))))
+
+ggplot(ch2, aes(x = ch2)) +
+  geom_bar(show.legend = FALSE,
+           fill = scale_fill$palette(3)[[2]]) +
+  scale_x_discrete(name = "",  drop=FALSE) +
+  scale_y_continuous(name = "", breaks = 0:11*5) +
+  scale_fill +
+  coord_flip(ylim = c(0, 55)) 
+```
+
+
+Column {data-width=300}
+-----------------------------------------------------------------------
+
+### What parts of Skills Self-Assessment did you find challenging or impossible?
+
+```{r, fig.height=5}
+ssa_levels <- c("combine data" = "Combining the data from two files", 
+                "subject descriptives" = "Calculating the participant descriptives", 
+                "trial exclusion" = "Determining how many trials were excluded", 
+                "trial descriptives" = "Calculating the trial descriptives", 
+                "analysis" = "Running the analyses")
+
+ssa <- select(data, ssa = 5) %>%
+  separate_rows(ssa, sep = ", ") %>%
+  mutate(ssa = factor(ssa, rev(ssa_levels), rev(names(ssa_levels))))
+
+ggplot(ssa, aes(x = ssa)) +
+  geom_bar(show.legend = FALSE,
+           fill = scale_fill$palette(3)[[3]]) +
+  scale_x_discrete(name = "",  drop=FALSE) +
+  scale_y_continuous(name = "", breaks = 0:11*5) +
+  scale_fill +
+  coord_flip(ylim = c(0, 55)) 
+```
+
+
+
+### How did you engage with the Skills Self-Assessment?
+
+```{r, fig.height=10}
+skass <- select(data, skass = 4) %>%
+  count(skass) %>%
+  mutate(skass = glue::glue("({round(100*n/sum(n))}%) {skass}"))
+
+treemap::treemap(skass,
+  index="skass",
+  vSize="n",
+  title = "",
+  palette = "BuPu",
+  inflate.labels = TRUE
+)
+```
+
+Column {data-width=300}
+-----------------------------------------------------------------------
+
+### Have you been studying in a group?
+
+```{r, fig.height=3.5}
+group <- select(data, group = 6) %>%
+  count(group) %>%
+  mutate(group = factor(group, rev(c("Yes", "No, but I'd like to", "No, and I'd rather not"))))
+
+ggplot(group, aes(x = group, fill = group)) +
+  geom_bar(show.legend = FALSE) +
+  scale_x_discrete(name = "",  drop=FALSE) +
+  scale_y_continuous(name = "", breaks = 0:11*5) +
+  scale_fill +
+  coord_flip(ylim = c(0, 55)) 
+```
+
+### List concepts you learned in Chapters 1 and 2 that you feel confident about.
+
+```{r, fig.height=5}
+omitted <- c(stop_words$word, "im", 0:9)
+
+words <- select(data, confident = 7) %>%
+  filter(!is.na(confident)) %>%
+  unnest_tokens(output = "word", input = "confident") %>%
+  count(word) %>%
+  filter(!word %in% omitted) %>%
+  slice_max(order_by = n, n = 50, with_ties = FALSE)
+
+ggplot(words, aes(label = word, colour = word, size = n)) +
+  geom_text_wordcloud_area() +
+  scale_size_area(max_size = 16) +
+  theme_minimal(base_size = 14) +
+  scale_color_see_d(palette = "ice") 
+```
+
+### List concepts you learned in Chapters 1 and 2 that you feel less confident about and would like reviewed in class today.
+
+```{r, fig.height = 5}
+omitted <- c(stop_words$word, "im", 0:9)
+
+words <- select(data, confident = 8) %>%
+  filter(!is.na(confident)) %>%
+  unnest_tokens(output = "word", input = "confident") %>%
+  count(word) %>%
+  filter(!word %in% omitted) %>%
+  slice_max(order_by = n, n = 50, with_ties = FALSE)
+
+ggplot(words, aes(label = word, colour = word, size = n)) +
+  geom_text_wordcloud_area() +
+  scale_size_area(max_size = 16) +
+  theme_minimal(base_size = 14) +
+  scale_color_see_d(palette = "ice") 
+```
