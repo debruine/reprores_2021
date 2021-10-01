@@ -1,10 +1,9 @@
 # ReproRes 2021
 
 ## Class 02 (2021-10-01)
-<!--
+
 * [Recording]()
 * [Poll 2](https://debruine.github.io/reprores_2021/poll-02.html)
--->
 
 ### Pre-class
 

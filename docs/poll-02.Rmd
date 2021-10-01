@@ -52,7 +52,7 @@ n <- nrow(data)
 
 `r n` Participants
 
-Row {data-height=200}
+Row {data-height=400}
 -----------------------------------------------------------------------
 
 ### How did you engage with Chapter 1?
@@ -86,7 +86,7 @@ ggplot(subdat, aes(x = x, fill = x)) +
 ```
 
 
-Row {data-height=200}
+Row {data-height=400}
 -----------------------------------------------------------------------
 
 ### What parts of Skills Self-Assessment did you find challenging or impossible?
@@ -130,7 +130,7 @@ treemap::treemap(skass,
 )
 ```
 
-Row {data-height=200}
+Row {data-height=400}
 -----------------------------------------------------------------------
 
 ### How are you accessing RStudio?
@@ -163,7 +163,7 @@ ggplot(subdat, aes(x = x, fill = x)) +
   coord_flip(ylim = c(0, n)) 
 ```
 
-Row {data-height=200}
+Row {data-height=400}
 -----------------------------------------------------------------------
 
 ### List concepts you learned in Chapters 1 and 2 that you feel confident about.
