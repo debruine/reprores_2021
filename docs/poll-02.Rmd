@@ -2,8 +2,8 @@
 title: "ReproRes Poll Class 02"
 output: 
   flexdashboard::flex_dashboard:
-    orientation: columns
-    vertical_layout: fill
+    orientation: rows
+    vertical_layout: scroll
     theme: yeti
 ---
 
@@ -19,6 +19,7 @@ knitr::opts_chunk$set(
 # [Poll](https://forms.gle/1EY8WcHKyXQvxqMz9)
 
 library(flexdashboard)
+library(kableExtra)
 library(tidyverse)
 library(googlesheets4)
 options(gargle_oauth_email = "debruine@gmail.com")
@@ -30,8 +31,8 @@ library(tidytext) # for manipulating text for word clouds
 
 ```{r, eval = TRUE}
 theme_set(theme_fivethirtyeight(base_size = 24))
-scale_fill <- scale_fill_fivethirtyeight(drop=FALSE)
-scale_colour <- scale_colour_fivethirtyeight(drop=FALSE)
+scale_fill <- scale_fill_brewer(palette = "Spectral", drop=FALSE)
+scale_colour <- scale_colour_brewer(palette = "Spectral", drop=FALSE)
 ```
 
 ```{r}
@@ -51,19 +52,18 @@ n <- nrow(data)
 
 `r n` Participants
 
-Column {data-width=300}
+Row {data-height=200}
 -----------------------------------------------------------------------
 
 ### How did you engage with Chapter 1?
 
-```{r, fig.height=7}
-ch1 <- select(data, ch1 = 2) %>%
-  separate_rows(ch1, sep = ", ") %>%
-  mutate(ch1 = factor(ch1, rev(engage), rev(names(engage))))
+```{r}
+subdat <- select(data, x = 2) %>%
+  separate_rows(x, sep = ", ") %>%
+  mutate(x = factor(x, rev(engage), rev(names(engage))))
 
-ggplot(ch1, aes(x = ch1)) +
-  geom_bar(show.legend = FALSE,
-           fill = scale_fill$palette(3)[[1]]) +
+ggplot(subdat, aes(x = x, fill = x)) +
+  geom_bar(show.legend = FALSE, colour = "black") +
   scale_x_discrete(name = "",  drop=FALSE) +
   scale_y_continuous(name = "", breaks = 0:11*5) +
   scale_fill +
@@ -72,14 +72,13 @@ ggplot(ch1, aes(x = ch1)) +
 
 ### How did you engage with Chapter 2?
 
-```{r, fig.height=7}
-ch2 <- select(data, ch2 = 3) %>%
-  separate_rows(ch2, sep = ", ") %>%
-  mutate(ch2 = factor(ch2, rev(engage), rev(names(engage))))
+```{r}
+subdat <- select(data, x = 3) %>%
+  separate_rows(x, sep = ", ") %>%
+  mutate(x = factor(x, rev(engage), rev(names(engage))))
 
-ggplot(ch2, aes(x = ch2)) +
-  geom_bar(show.legend = FALSE,
-           fill = scale_fill$palette(3)[[2]]) +
+ggplot(subdat, aes(x = x, fill = x)) +
+  geom_bar(show.legend = FALSE,colour = "black") +
   scale_x_discrete(name = "",  drop=FALSE) +
   scale_y_continuous(name = "", breaks = 0:11*5) +
   scale_fill +
@@ -87,25 +86,26 @@ ggplot(ch2, aes(x = ch2)) +
 ```
 
 
-Column {data-width=300}
+Row {data-height=200}
 -----------------------------------------------------------------------
 
 ### What parts of Skills Self-Assessment did you find challenging or impossible?
 
-```{r, fig.height=4}
+```{r}
 ssa_levels <- c("combine data" = "Combining the data from two files", 
                 "subject descriptives" = "Calculating the participant descriptives", 
                 "trial exclusion" = "Determining how many trials were excluded", 
                 "trial descriptives" = "Calculating the trial descriptives", 
-                "analysis" = "Running the analyses")
+                "analysis" = "Running the analyses",
+                "none" = "none")
 
-ssa <- select(data, ssa = 5) %>%
-  separate_rows(ssa, sep = ", ") %>%
-  mutate(ssa = factor(ssa, rev(ssa_levels), rev(names(ssa_levels))))
+subdat <- select(data, x = 5) %>%
+  separate_rows(x, sep = ", ") %>%
+  mutate(x = ifelse(is.na(x), "none", x)) %>%
+  mutate(x = factor(x, rev(ssa_levels), rev(names(ssa_levels))))
 
-ggplot(ssa, aes(x = ssa)) +
-  geom_bar(show.legend = FALSE,
-           fill = scale_fill$palette(3)[[3]]) +
+ggplot(subdat, aes(x = x, fill = x)) +
+  geom_bar(show.legend = FALSE) +
   scale_x_discrete(name = "",  drop=FALSE) +
   scale_y_continuous(name = "", breaks = 0:11*5) +
   scale_fill +
@@ -116,7 +116,7 @@ ggplot(ssa, aes(x = ssa)) +
 
 ### How did you engage with the Skills Self-Assessment?
 
-```{r, fig.height=6}
+```{r}
 skass <- select(data, skass = 4) %>%
   count(skass) %>%
   mutate(skass = glue::glue("({round(100*n/sum(n))}%) {skass}"))
@@ -125,46 +125,50 @@ treemap::treemap(skass,
   index="skass",
   vSize="n",
   title = "",
-  palette = "BuPu",
+  palette = "Spectral",
   inflate.labels = TRUE
 )
 ```
 
-### How are you accessing RStudio?
-
-```{r, fig.height=3}
-group <- select(data, group = 9) %>%
-  count(group) %>%
-  filter(!is.na(group))
-
-ggplot(group, aes(x = group, fill = group)) +
-  geom_bar(show.legend = FALSE, color = "black") +
-  scale_x_discrete(name = "",  drop=FALSE) +
-  scale_y_continuous(name = "", breaks = 0:11*5) +
-  scale_fill_brewer(palette = "Spectral") +
-  coord_flip(ylim = c(0, n)) 
-```
-
-Column {data-width=300}
+Row {data-height=200}
 -----------------------------------------------------------------------
 
-### Have you been studying in a group?
+### How are you accessing RStudio?
 
-```{r, fig.height=3.5}
-group <- select(data, x = 6) %>%
-  mutate(x = factor(x, rev(c("Yes", "No, but I'd like to", "No, and I'd rather not"))))
+```{r}
+subdat <- select(data, x = 9) %>%
+  separate_rows(x, sep = ", ") %>%
+  filter(!is.na(x))
 
-ggplot(group, aes(x = x, fill = x)) +
-  geom_bar(show.legend = FALSE) +
+ggplot(subdat, aes(x = x, fill = x)) +
+  geom_bar(show.legend = FALSE, color = "black") +
   scale_x_discrete(name = "",  drop=FALSE) +
   scale_y_continuous(name = "", breaks = 0:11*5) +
   scale_fill +
   coord_flip(ylim = c(0, n)) 
 ```
 
+
+### Have you been studying in a group?
+
+```{r}
+subdat <- select(data, x = 6) %>%
+  mutate(x = factor(x, rev(c("Yes", "No, but I'd like to", "No, and I'd rather not"))))
+
+ggplot(subdat, aes(x = x, fill = x)) +
+  geom_bar(show.legend = FALSE, colour = "black") +
+  scale_x_discrete(name = "",  drop=FALSE) +
+  scale_y_continuous(name = "", breaks = 0:11*5) +
+  scale_fill +
+  coord_flip(ylim = c(0, n)) 
+```
+
+Row {data-height=200}
+-----------------------------------------------------------------------
+
 ### List concepts you learned in Chapters 1 and 2 that you feel confident about.
 
-```{r, fig.height=5}
+```{r}
 omitted <- c(stop_words$word, "im", 0:9)
 
 words <- select(data, confident = 7) %>%
@@ -176,14 +180,16 @@ words <- select(data, confident = 7) %>%
 
 ggplot(words, aes(label = word, colour = word, size = n)) +
   geom_text_wordcloud_area() +
-  scale_size_area(max_size = 16) +
-  theme_minimal(base_size = 14) +
+  scale_size_area(max_size = 14) +
+  theme_minimal(base_size = 10) +
   scale_color_see_d(palette = "ice") 
 ```
 
+
+
 ### List concepts you learned in Chapters 1 and 2 that you feel less confident about and would like reviewed in class today.
 
-```{r, fig.height = 5}
+```{r}
 omitted <- c(stop_words$word, "im", 0:9)
 
 words <- select(data, confident = 8) %>%
@@ -195,7 +201,29 @@ words <- select(data, confident = 8) %>%
 
 ggplot(words, aes(label = word, colour = word, size = n)) +
   geom_text_wordcloud_area() +
-  scale_size_area(max_size = 16) +
+  scale_size_area(max_size = 20) +
   theme_minimal(base_size = 14) +
   scale_color_see_d(palette = "ice") 
+```
+
+Row {data-height=600}
+-----------------------------------------------------------------------
+
+### Confident 
+
+```{r}
+select(data, confident = 7) %>%
+  filter(!is.na(confident)) %>%
+  kable(row.names = FALSE, col.names = "") %>%
+  kable_classic(lightable_options = "striped")
+```
+
+
+### Not Confident 
+
+```{r}
+select(data, confident = 8) %>%
+  filter(!is.na(confident)) %>%
+  kable(row.names = FALSE, col.names = "") %>%
+  kable_classic(lightable_options = "striped")
 ```
