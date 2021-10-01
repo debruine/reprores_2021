@@ -2,7 +2,7 @@
 
 ## Class 02 (2021-10-01)
 
-* [Recording]()
+* [Recording](https://uofglasgow.zoom.us/rec/share/WyZVEBMx9KDMvz03yd-N9NidJYKC6rrtnJRCqiF7rOaL3UDC4uLpHRR-lduDrXrl.jD7EfFllyrA_elUm)
 * [Poll 2](https://debruine.github.io/reprores_2021/poll-02.html)
 
 ### Pre-class
