@@ -17,7 +17,14 @@
 - Start at 10:05 (remind Lisa to start recording!)
 - Share your progress in exercise 2
 - Chapter 2 exercise walk-through
+- Break 11:22 - 11:30
 - Questions
+    - bibliographies (next week)
+    - inline R
+    - install.packages in scripts (NEVER!)
+    - package::function() vs function()
+    - self-assessment answers
+    - [coding club/M&Ms](https://psyteachr.github.io/)
 - Discuss the data skills self-assessment
 
 ### After Class

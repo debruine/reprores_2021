@@ -38,16 +38,18 @@ scale_colour <- scale_colour_fivethirtyeight(drop=FALSE)
 # read data
 url <- "1mZlGcQecowigXVUN_0HsnLPEpSaE0tXfoCfw6Lvv2vQ"
 data <- read_sheet(url, sheet = "Week2") %>%
-  filter(row_number() != 0)
+  filter(row_number() != 1)
 
 
 engage <- c(book = "Read the book", 
             videos = "Watched the videos", 
             exercise = "Did the formative exercise",
             none = "I didn't get a chance this week")
+
+n <- nrow(data)
 ```
 
-`r nrow(data)` Participants
+`r n` Participants
 
 Column {data-width=300}
 -----------------------------------------------------------------------
@@ -65,7 +67,7 @@ ggplot(ch1, aes(x = ch1)) +
   scale_x_discrete(name = "",  drop=FALSE) +
   scale_y_continuous(name = "", breaks = 0:11*5) +
   scale_fill +
-  coord_flip(ylim = c(0, 55)) 
+  coord_flip(ylim = c(0, n)) 
 ```
 
 ### How did you engage with Chapter 2?
@@ -81,7 +83,7 @@ ggplot(ch2, aes(x = ch2)) +
   scale_x_discrete(name = "",  drop=FALSE) +
   scale_y_continuous(name = "", breaks = 0:11*5) +
   scale_fill +
-  coord_flip(ylim = c(0, 55)) 
+  coord_flip(ylim = c(0, n)) 
 ```
 
 
@@ -90,7 +92,7 @@ Column {data-width=300}
 
 ### What parts of Skills Self-Assessment did you find challenging or impossible?
 
-```{r, fig.height=5}
+```{r, fig.height=4}
 ssa_levels <- c("combine data" = "Combining the data from two files", 
                 "subject descriptives" = "Calculating the participant descriptives", 
                 "trial exclusion" = "Determining how many trials were excluded", 
@@ -107,14 +109,14 @@ ggplot(ssa, aes(x = ssa)) +
   scale_x_discrete(name = "",  drop=FALSE) +
   scale_y_continuous(name = "", breaks = 0:11*5) +
   scale_fill +
-  coord_flip(ylim = c(0, 55)) 
+  coord_flip(ylim = c(0, n)) 
 ```
 
 
 
 ### How did you engage with the Skills Self-Assessment?
 
-```{r, fig.height=10}
+```{r, fig.height=6}
 skass <- select(data, skass = 4) %>%
   count(skass) %>%
   mutate(skass = glue::glue("({round(100*n/sum(n))}%) {skass}"))
@@ -128,22 +130,36 @@ treemap::treemap(skass,
 )
 ```
 
+### How are you accessing RStudio?
+
+```{r, fig.height=3}
+group <- select(data, group = 9) %>%
+  count(group) %>%
+  filter(!is.na(group))
+
+ggplot(group, aes(x = group, fill = group)) +
+  geom_bar(show.legend = FALSE, color = "black") +
+  scale_x_discrete(name = "",  drop=FALSE) +
+  scale_y_continuous(name = "", breaks = 0:11*5) +
+  scale_fill_brewer(palette = "Spectral") +
+  coord_flip(ylim = c(0, n)) 
+```
+
 Column {data-width=300}
 -----------------------------------------------------------------------
 
 ### Have you been studying in a group?
 
 ```{r, fig.height=3.5}
-group <- select(data, group = 6) %>%
-  count(group) %>%
-  mutate(group = factor(group, rev(c("Yes", "No, but I'd like to", "No, and I'd rather not"))))
+group <- select(data, x = 6) %>%
+  mutate(x = factor(x, rev(c("Yes", "No, but I'd like to", "No, and I'd rather not"))))
 
-ggplot(group, aes(x = group, fill = group)) +
+ggplot(group, aes(x = x, fill = x)) +
   geom_bar(show.legend = FALSE) +
   scale_x_discrete(name = "",  drop=FALSE) +
   scale_y_continuous(name = "", breaks = 0:11*5) +
   scale_fill +
-  coord_flip(ylim = c(0, 55)) 
+  coord_flip(ylim = c(0, n)) 
 ```
 
 ### List concepts you learned in Chapters 1 and 2 that you feel confident about.
@@ -156,7 +172,7 @@ words <- select(data, confident = 7) %>%
   unnest_tokens(output = "word", input = "confident") %>%
   count(word) %>%
   filter(!word %in% omitted) %>%
-  slice_max(order_by = n, n = 50, with_ties = FALSE)
+  slice_max(order_by = n, n = 25, with_ties = FALSE)
 
 ggplot(words, aes(label = word, colour = word, size = n)) +
   geom_text_wordcloud_area() +
@@ -175,7 +191,7 @@ words <- select(data, confident = 8) %>%
   unnest_tokens(output = "word", input = "confident") %>%
   count(word) %>%
   filter(!word %in% omitted) %>%
-  slice_max(order_by = n, n = 50, with_ties = FALSE)
+  slice_max(order_by = n, n = 25, with_ties = FALSE)
 
 ggplot(words, aes(label = word, colour = word, size = n)) +
   geom_text_wordcloud_area() +

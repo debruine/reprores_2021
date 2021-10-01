@@ -1,0 +1,61 @@
+---
+title: "My CV"
+author: "Lisa DeBruine"
+date: "01/10/2021"
+output:
+  html_document:
+    df_print: kable
+    theme: 
+      version: 4
+      bootswatch: yeti
+    highlight: tango
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  echo = FALSE,
+  warning = FALSE,
+  message = FALSE
+)
+
+library(tidyverse)
+```
+
+# Research Interests
+
+My research interests are faces and open science.
+
+## Links
+
+-   [Face Research Lab](http://facelab.org)
+-   [Open Science Framework](https://osf.io)
+
+
+# Educational History
+
+```{r edutable}
+tribble(
+  ~"Year of Graduation", ~"Degree", ~"Institution",
+  1998, "BSc", "University of Michigan",
+  2000, "MSc", "University of Michigan"
+)
+```
+
+![](images/new_R_logo.png){width="25%"}
+
+```{r fortune, results='asis'}
+fortunes::fortune()
+```
+
+
+
+```{r}
+today <- lubridate::today()
+```
+
+Today is `r today`.
+
+
+The main effect of X  was greater than 0 (t `r df` = `r t_value`, p = `r p_value`).
+
