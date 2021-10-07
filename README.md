@@ -1,5 +1,29 @@
 # ReproRes 2021
 
+## Class 03 (2021-10-08)
+
+### Pre-class
+
+- Fill out the [pre-class poll](https://forms.gle/tVh5L7i2qLnGmbPk7)
+- Open [Chapter 3](https://psyteachr.github.io/reprores-v2/ggplot.html)
+- Start up RStudio and open your project for exercise 3
+
+### In Class
+
+- Start at 10:05 (remind Lisa to start recording!)
+- Share your progress in exercise 3
+- Chapter 3 exercise walk-through
+- Break 
+- Discuss term project
+
+### After Class
+
+- Read [Chapter 4: Working with Data](https://psyteachr.github.io/reprores-v2/data.html)
+- Watch the associated videos (if you need further clarification)
+- Complete the [exercises](https://psyteachr.github.io/reprores-v2/exercises.html) for chapter 4
+- Create an RStudio project for your term project 
+- Create the outline R Markdown file for your term project
+
 ## Class 02 (2021-10-01)
 
 * [Recording](https://uofglasgow.zoom.us/rec/share/WyZVEBMx9KDMvz03yd-N9NidJYKC6rrtnJRCqiF7rOaL3UDC4uLpHRR-lduDrXrl.jD7EfFllyrA_elUm)
@@ -30,7 +54,7 @@
 
 - Read [Chapter 3: Data Visualisation](https://psyteachr.github.io/reprores-v2/ggplot.html)
 - Watch the associated videos (if you need further clarification)
-- Complete the [exercises](https://psyteachr.github.io/reprores-v2/exercises.html) for  chapter 3
+- Complete the [exercises](https://psyteachr.github.io/reprores-v2/exercises.html) for chapter 3
 
 
 ## Class 01 (2021-09-24)
