@@ -39,7 +39,7 @@ scale_colour <- scale_colour_brewer(palette = "Spectral", drop=FALSE)
 # read data
 url <- "1mZlGcQecowigXVUN_0HsnLPEpSaE0tXfoCfw6Lvv2vQ"
 data <- read_sheet(url, sheet = "Week3") %>%
-  filter(row_number() != 0)
+  filter(row_number() != 1)
 
 
 engage <- c(book = "Read the book", 
@@ -81,7 +81,8 @@ ggplot(subdat, aes(x = x, fill = x)) +
   geom_bar(show.legend = FALSE, colour = "black") +
   scale_x_discrete(name = "",  drop=FALSE) +
   scale_y_continuous(name = "", breaks = 0:11*5) +
-  scale_fill_manual(values = tolower(rainbow)) +
+  scale_fill_manual(drop = FALSE,
+                    values = tolower(rev(rainbow))) +
   coord_flip(ylim = c(0, n)) 
 ```
 

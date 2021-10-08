@@ -1,0 +1,167 @@
+---
+title: "Skills Assessment"
+author: "Lisa DeBruine"
+date: "07/10/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, message = FALSE)
+library(tidyverse)
+library(lsr)
+```
+
+
+## Load Data
+
+```{r load-data}
+demographics <- read_csv("data/demographics.csv", 
+                         show_col_types = FALSE)
+
+stroop <- read_csv("data/stroop.csv", 
+                   show_col_types = FALSE)
+```
+
+## Subject demographics
+
+```{r}
+total_subjects <- nrow(demographics)
+removed_subjects <- is.na(demographics$native_speaker) %>% sum()
+remaining_subject <- total_subjects - removed_subjects
+```
+
+Make table of included participants.
+
+```{r}
+included <- demographics %>%
+  filter(!is.na(native_speaker))
+```
+
+
+Demographics of included subjects.
+
+```{r}
+non_native_speakers <- sum(included$native_speaker == "no", na.rm = TRUE)
+native_speakers <- sum(included$native_speaker == "yes", na.rm = TRUE)
+
+mean_age <- mean(included$age, na.rm = TRUE) %>%
+  round(digits = 2)
+sd_age <- sd(included$age, na.rm = TRUE) %>%
+  round(digits = 2)
+```
+
+## Join tables
+
+```{r}
+stroop_joined <- stroop %>%
+  inner_join(included, by = "sub_id")
+```
+
+
+
+## Trial Info
+
+```{r}
+missing_trials <- is.na(stroop_joined$rt) %>% sum()
+
+incorrect_trials <- stroop_joined %>%
+  filter(!is.na(rt)) %>%
+  filter(ink_colour != response) %>%
+  nrow()
+
+included_trials <- stroop_joined %>%
+  filter(!is.na(rt)) %>%
+  filter(ink_colour == response)
+
+n_included_trials <- nrow(included_trials)
+```
+
+## Calculate stroop effect
+
+```{r}
+stroop_long <- included_trials %>%
+  mutate(trial_type = ifelse(word == ink_colour, "congruent", "incongruent")) %>%
+  group_by(sub_id, native_speaker, trial_type) %>%
+  summarise(mean_rt = mean(rt),
+            .groups = "drop")
+
+stroop_wide <- stroop_long %>%
+  pivot_wider(names_from = trial_type,
+              values_from = mean_rt) %>%
+  mutate(stroop = incongruent - congruent)
+```
+
+```{r}
+overall_congruent_mean <- mean(stroop_wide$congruent) %>% round(2)
+overall_congruent_sd <- sd(stroop_wide$congruent) %>% round(2)
+overall_incongruent_mean <- mean(stroop_wide$incongruent) %>% round(2)
+overall_incongruent_sd <- sd(stroop_wide$incongruent) %>% round(2)
+overall_stroop_mean <- mean(stroop_wide$stroop) %>% round(2)
+overall_stroop_sd <- sd(stroop_wide$stroop) %>% round(2)
+
+summary_table <- stroop_wide %>%
+  group_by(native_speaker) %>%
+  summarise(stroop_mean = mean(stroop),
+            stroop_sd = sd(stroop),
+            .groups = "drop") %>%
+  mutate(stroop_mean = round(stroop_mean, 2),
+         stroop_sd = round(stroop_sd, 2))
+
+non_stroop_mean <- summary_table %>% 
+  filter(native_speaker == "no") %>%
+  pull(stroop_mean)
+non_stroop_sd <- summary_table %>% 
+  filter(native_speaker == "no") %>%
+  pull(stroop_sd)
+yes_stroop_mean <- summary_table %>% 
+  filter(native_speaker == "yes") %>%
+  pull(stroop_mean)
+yes_stroop_sd <- summary_table %>% 
+  filter(native_speaker == "yes") %>%
+  pull(stroop_sd)
+
+comparison_word <- ifelse(yes_stroop_mean > non_stroop_mean, 
+                          yes = "larger", 
+                          no = "smaller")
+```
+
+
+## Analysis
+
+```{r}
+my_t_test <- t.test(stroop ~ native_speaker, data = stroop_wide)
+
+t <- my_t_test$statistic %>% round(2)
+df <- my_t_test$parameter %>% round(1)
+p <- my_t_test$p.value %>% round(3)
+
+significant <- ifelse(p < .05, "was", "was not")
+
+ci_low <- my_t_test$conf.int[[1]] %>% round(2)
+ci_high <- my_t_test$conf.int[[2]] %>% round(2)
+
+d <- cohensD(formula = stroop ~ native_speaker, data = stroop_wide) %>% round(2)
+```
+
+
+
+
+## Results
+
+We tested `r total_subjects` participants on a Stroop task to determine if native speakers show a larger Stroop effect than non-native speakers. We removed data from N = `r removed_subjects` participants who did not respond to the question about being a native speaker. Of the remaining `r remaining_subject` participants, `r native_speakers` were native speakers and `r non_native_speakers` were non-native speakers. The mean age of the participants was `r mean_age` years (SD = `r sd_age`).
+
+We excluded `r missing_trials` trials because participants did not respond before the response deadline (resulting in a missing value) and `r incorrect_trials` trials because participants responded incorrectly, leaving `r n_included_trials` trials for analysis.
+
+Next, we calculated mean reaction times for correct congruent and incongruent trials for each participant. The overall mean reaction time was `r overall_congruent_mean` ms (SD=`r overall_congruent_sd`) for congruent trials and `r overall_incongruent_mean` ms (SD=`r overall_incongruent_sd`) for incongruent trials, yielding an overall Stroop effect of `r overall_stroop_mean` ms (SD=`r overall_stroop_sd`). The Stroop effect for native speakers (M=`r yes_stroop_mean`; SD=`r yes_stroop_sd`) was numerically `r comparison_word` than the Stroop effect for non-native speakers (M=`r non_stroop_mean`; SD=`r non_stroop_sd`).
+
+According to Welch’s t-test (which does not assume equal variances) with α=.05, this difference `r significant` statistically significant, t(`r df`)=`r t`, p=`r p`. The 95% confidence interval for the mean difference was [`r ci_low`, `r ci_high`], with an effect size (Cohen’s d) of `r d`.
+
+## Plot
+
+```{r, message = FALSE}
+ggplot(data = stroop_wide, 
+       mapping = aes(x = native_speaker, y = stroop)) +
+  geom_violin() +
+  stat_summary()
+```
+

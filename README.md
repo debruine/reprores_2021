@@ -1,5 +1,9 @@
 # ReproRes 2021
 
+## Class 04 (2021-10-15)
+
+
+
 ## Class 03 (2021-10-08)
 
 ### Pre-class
@@ -11,7 +15,6 @@
 ### In Class
 
 - Start at 10:05 (remind Lisa to start recording!)
-- Share your progress in exercise 3
 - Chapter 3 exercise walk-through
 - Break 
 - Discuss term project

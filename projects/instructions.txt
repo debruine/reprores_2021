@@ -1,0 +1,11 @@
+=== Reproducible Report for {student_id} ===
+  
+Your questionnaire measures {topic}. Your research question is to determine if the {topic} score differs by {iv} for the subset of the sample where {subset} is {level}. In other words, if you just look at the participants for whom {subset} is {level}, what is the main effect of {iv} on the {topic} score?
+
+There are 4 data files for the subjects. The name of the data file tells you what condition and version of the experiment the subjects were in. For example, the file "subjects_condition-{factors$condition[[1]]}_version-{factors$version[[1]]}.csv" contains the subjects who were in condition "{factors$condition[[1]]}" and version "{factors$version[[1]]}".
+
+The {quest_n} {topic} questionnaire items are on a scale from 1 (low) to 7 (high), but some of the items need to be reverse-coded. This is indicated by the letter R in the question column name. You create the {topic} score by summing the questions *after* reversing the relevant questions.
+
+Watch out for missing data. Omit subjects who have missing values for any of the variables involved in your analysis, but not subjects who have other missing variables.
+
+The report should be written like a summary document for your PI. You don't need to show your code in the rendered report. Include summary tables and/or plots with subject demographics from both the full data set and the subset you'll analyse. Visualise the relationship of interest. Conduct a GLM analysis to answer the research question above. Finally, do a power analysis to determine the sample size you would need to have {power}% power to detect a 0.5-point difference between the levels of {iv} with an alpha criterion of {alpha}.
