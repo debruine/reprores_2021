@@ -1,6 +1,33 @@
 # ReproRes 2021
 
+## Class 05 (2021-10-22)
+
+### Pre-class 
+
+- Fill out the pre-class poll
+- Open [Chapter 5](https://psyteachr.github.io/reprores-v2/joins.html)
+- Start up RStudio and open your project for exercise 5
+
+### In Class
+
+- Start at 10:05 (remind Lisa to start recording!)
+- Chapter 5 exercise walk-through
+- break
+- Questions
+
+### After Class
+
+- Read [Chapter 6: Tidy Data](https://psyteachr.github.io/reprores-v2/tidyr.html)
+- Watch the associated videos (if you need further clarification)
+- Complete the [exercises](https://psyteachr.github.io/reprores-v2/exercises.html) for chapter 6
+- Term project: Join your subject data into one subject table
+
 ## Class 04 (2021-10-15)
+
+* [Recording](https://uofglasgow.zoom.us/)
+* [Poll 2](https://debruine.github.io/reprores_2021/poll-04.html)
+
+### Pre-class 
 
 - Fill out the [pre-class poll](https://forms.gle/DTUMyo63gKhH6M1W6)
 - Open [Chapter 4](https://psyteachr.github.io/reprores-v2/dplyr.html)
@@ -21,6 +48,9 @@
 - Term project: Load the data and start exploring it (e.g., make histograms to plot continuous variables -- these will help you understand the data, but might not be appropriate to include in the report)
 
 ## Class 03 (2021-10-08)
+
+* [Recording](https://uofglasgow.zoom.us/rec/share/f4NZgTs31v9CKfPvJmC5LgG5RPtcqb-EI-s82r4lDxe9FfGYv7dOXoCTwNygb0nN.f2lqy5TSoKjQW1zE)
+* [Poll 2](https://debruine.github.io/reprores_2021/poll-03.html)
 
 ### Pre-class
 
