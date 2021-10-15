@@ -1,0 +1,137 @@
+---
+title: "ReproRes Poll Class 04"
+output: 
+  flexdashboard::flex_dashboard:
+    orientation: rows
+    vertical_layout: scroll
+    theme: yeti
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  echo = FALSE,
+  message = FALSE,
+  warning = FALSE,
+  fig.width = 10,
+  fig.height = 5
+)
+
+# [Poll](https://forms.gle/tVh5L7i2qLnGmbPk7)
+
+library(flexdashboard)
+library(kableExtra)
+library(tidyverse)
+library(googlesheets4)
+options(gargle_oauth_email = "debruine@gmail.com")
+library(ggthemes)
+library(see)
+library(ggwordcloud) # for word clouds
+library(tidytext) # for manipulating text for word clouds
+```
+
+```{r, eval = TRUE}
+theme_set(theme_fivethirtyeight(base_size = 24))
+scale_fill <- scale_fill_brewer(palette = "Dark2", drop=FALSE)
+scale_colour <- scale_colour_brewer(palette = "Dark2", drop=FALSE)
+```
+
+```{r}
+# read data
+url <- "1mZlGcQecowigXVUN_0HsnLPEpSaE0tXfoCfw6Lvv2vQ"
+data <- read_sheet(url, sheet = "Week4") %>%
+  filter(row_number() != 0)
+
+
+engage <- c(book = "Read the book", 
+            videos = "Watched the videos", 
+            exercise = "Did the formative exercise",
+            none = "I didn't get a chance this week")
+
+n <- nrow(data)
+```
+
+`r n` Participants
+
+Row {data-height=400}
+-----------------------------------------------------------------------
+
+### How did you engage with Chapter 4?
+
+```{r}
+subdat <- select(data, x = 2) %>%
+  separate_rows(x, sep = ", ") %>%
+  mutate(x = factor(x, rev(engage), rev(names(engage))))
+
+ggplot(subdat, aes(x = x, fill = x)) +
+  geom_bar(show.legend = FALSE, colour = "black") +
+  scale_x_discrete(name = "",  drop=FALSE) +
+  scale_y_continuous(name = "", breaks = 0:11*5) +
+  scale_fill +
+  coord_flip(ylim = c(0, n)) 
+```
+
+
+Row {data-height=400}
+-----------------------------------------------------------------------
+
+### List concepts you learned in Chapter 4 that you feel confident about.
+
+```{r}
+omitted <- c(stop_words$word, "im", 0:9)
+
+words <- select(data, confident = 3) %>%
+  filter(!is.na(confident)) %>%
+  unnest_tokens(output = "word", input = "confident") %>%
+  count(word) %>%
+  filter(!word %in% omitted) %>%
+  slice_max(order_by = n, n = 25, with_ties = FALSE)
+
+ggplot(words, aes(label = word, colour = word, size = n)) +
+  geom_text_wordcloud_area() +
+  scale_size_area(max_size = 14) +
+  theme_minimal(base_size = 10) +
+  scale_color_see_d(palette = "contrast") 
+```
+
+
+
+### List concepts you learned in Chapter 4 that you feel less confident about and would like reviewed in class today.
+
+```{r}
+omitted <- c(stop_words$word, "im", 0:9)
+
+words <- select(data, confident = 4) %>%
+  filter(!is.na(confident)) %>%
+  unnest_tokens(output = "word", input = "confident") %>%
+  count(word) %>%
+  filter(!word %in% omitted) %>%
+  slice_max(order_by = n, n = 25, with_ties = FALSE)
+
+ggplot(words, aes(label = word, colour = word, size = n)) +
+  geom_text_wordcloud_area() +
+  scale_size_area(max_size = 20) +
+  theme_minimal(base_size = 14) +
+  scale_color_see_d(palette = "contrast") 
+```
+
+Row {data-height=600}
+-----------------------------------------------------------------------
+
+### Confident 
+
+```{r}
+select(data, confident = 3) %>%
+  filter(!is.na(confident)) %>%
+  kable(row.names = FALSE, col.names = "") %>%
+  kable_classic(lightable_options = "striped")
+```
+
+
+### Not Confident 
+
+```{r}
+select(data, confident = 4) %>%
+  filter(!is.na(confident)) %>%
+  kable(row.names = FALSE, col.names = "") %>%
+  kable_classic(lightable_options = "striped")
+```

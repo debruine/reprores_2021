@@ -10,7 +10,7 @@
 
 - Start at 10:05 (remind Lisa to start recording!)
 - Discuss term project
-- Break 
+- Break 10:50 - 11:00
 - Chapter 4 exercise walk-through
 
 ### After Class

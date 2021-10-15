@@ -1,0 +1,20 @@
+---
+title: "Biblio Demo"
+author: "Lisa DeBruine"
+date: "15/10/2021"
+bibliography: mybib.bib
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+library(tidyverse)
+```
+
+I did models like @barr2013random told me to.
+
+```{r}
+data <- read_csv("data/5factor.csv")
+```
+
+## References
