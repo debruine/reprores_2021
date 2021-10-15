@@ -24,8 +24,8 @@
 
 ## Class 04 (2021-10-15)
 
-* [Recording](https://uofglasgow.zoom.us/)
-* [Poll 2](https://debruine.github.io/reprores_2021/poll-04.html)
+* [Recording](https://uofglasgow.zoom.us/rec/share/4EGBKo5ndUPsesOAzXglFsVAK2FA6ZJpePtPFUnpIf9ujgztxdQQ1Sk3flh9Z404.VR5SzSl53HtGzmHq)
+* [Poll 4](https://debruine.github.io/reprores_2021/poll-04.html)
 
 ### Pre-class 
 
@@ -50,7 +50,7 @@
 ## Class 03 (2021-10-08)
 
 * [Recording](https://uofglasgow.zoom.us/rec/share/f4NZgTs31v9CKfPvJmC5LgG5RPtcqb-EI-s82r4lDxe9FfGYv7dOXoCTwNygb0nN.f2lqy5TSoKjQW1zE)
-* [Poll 2](https://debruine.github.io/reprores_2021/poll-03.html)
+* [Poll 3](https://debruine.github.io/reprores_2021/poll-03.html)
 
 ### Pre-class
 
