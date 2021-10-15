@@ -22,7 +22,8 @@ list.files("R", full.names = T) %>% lapply(source) -> sink
 ## Project 
 
 ```{r}
-random_project <- function(student_id) {
+random_project <- function(student_id,
+                           moodle_id = student_id) {
   # set seed using student ID
   seed_from_string(student_id)
   
@@ -32,7 +33,7 @@ random_project <- function(student_id) {
                              c("ctrl", "test")), 1) %>% unlist()
   vers_levels <- sample(list(c("V1","V2"), 
                              c(1, 2), 
-                             c("English", "Mandarin")), 1) %>% unlist()
+                             c("easy", "hard")), 1) %>% unlist()
   
   # simulate subjects
   subjects <- make_subjects(cond_levels = cond_levels, vers_levels = vers_levels)
@@ -42,7 +43,7 @@ random_project <- function(student_id) {
   
   # customise instructions
   instructions <- make_instructions(
-    template = "instructions.txt",
+    template = "instructions.md",
     factors = list(
       language = c("monolingual", "bilingual"), 
       condition = cond_levels, 
@@ -53,7 +54,8 @@ random_project <- function(student_id) {
   )
 
   # write files to a new directory
-  dir <- paste0("projects/project_", student_id)
+  dir.create("projects", showWarnings = FALSE)
+  dir <- glue::glue("projects/Participant_{moodle_id}_assignsubmission_file_")
   dir.create(dir, showWarnings = FALSE)
   #readr::write_csv(subjects, file.path(dir, "subjects.csv"))
   # split subjects into separate files
@@ -67,14 +69,25 @@ random_project <- function(student_id) {
   }}
   
   readr::write_csv(questions, file.path(dir, "questions.csv"))
-  write(instructions, file.path(dir, "instructions.txt"))
+  write(instructions, file.path(dir, "instructions.md"))
   
   return(dir)
 }
 ```
 
 ```{r}
-random_project("test")
+#random_project("test")
+```
+
+
+```{r}
+
+students <- readxl::read_excel("~/ownCloudPsy/data_skills_msc/assessment_2021/assign_Your Personal Assessment Data.xlsx", skip = 3) %>%
+  select(student_id = `ID number`,
+         moodle_id = `Participant No`)
+
+purrr::pmap(students, random_project) -> projects
+
 ```
 
 

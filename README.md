@@ -2,7 +2,23 @@
 
 ## Class 04 (2021-10-15)
 
+- Fill out the [pre-class poll](https://forms.gle/DTUMyo63gKhH6M1W6)
+- Open [Chapter 4](https://psyteachr.github.io/reprores-v2/dplyr.html)
+- Start up RStudio and open your project for exercise 4
 
+### In Class
+
+- Start at 10:05 (remind Lisa to start recording!)
+- Discuss term project
+- Break 
+- Chapter 4 exercise walk-through
+
+### After Class
+
+- Read [Chapter 5: Data Relations](https://psyteachr.github.io/reprores-v2/joins.html)
+- Watch the associated videos (if you need further clarification)
+- Complete the [exercises](https://psyteachr.github.io/reprores-v2/exercises.html) for chapter 5
+- Term project: Load the data and start exploring it (e.g., make histograms to plot continuous variables -- these will help you understand the data, but might not be appropriate to include in the report)
 
 ## Class 03 (2021-10-08)
 
