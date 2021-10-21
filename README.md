@@ -4,19 +4,21 @@
 
 ### Pre-class 
 
-- Fill out the pre-class poll
+- Fill out the [pre-class poll](https://forms.gle/8RzHoTMpUkpYeSUT9)
 - Open [Chapter 5](https://psyteachr.github.io/reprores-v2/joins.html)
 - Start up RStudio and open your project for exercise 5
 
 ### In Class
 
 - Start at 10:05 (remind Lisa to start recording!)
+- Reading Week changes
 - Chapter 5 exercise walk-through
 - break
 - Questions
 
 ### After Class
 
+- Next week is Reading Week! No class and office hours by appointment only
 - Read [Chapter 6: Tidy Data](https://psyteachr.github.io/reprores-v2/tidyr.html)
 - Watch the associated videos (if you need further clarification)
 - Complete the [exercises](https://psyteachr.github.io/reprores-v2/exercises.html) for chapter 6

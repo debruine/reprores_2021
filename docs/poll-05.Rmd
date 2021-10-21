@@ -1,5 +1,5 @@
 ---
-title: "ReproRes Poll Class 04"
+title: "ReproRes Poll Class 05"
 output: 
   flexdashboard::flex_dashboard:
     orientation: rows
@@ -16,7 +16,7 @@ knitr::opts_chunk$set(
   fig.height = 5
 )
 
-# [Poll](https://forms.gle/tVh5L7i2qLnGmbPk7)
+# [Poll](https://forms.gle/8RzHoTMpUkpYeSUT9)
 
 library(flexdashboard)
 library(kableExtra)
@@ -27,6 +27,7 @@ library(ggthemes)
 library(see)
 library(ggwordcloud) # for word clouds
 library(tidytext) # for manipulating text for word clouds
+library(emo)
 ```
 
 ```{r, eval = TRUE}
@@ -38,7 +39,7 @@ scale_colour <- scale_colour_brewer(palette = "Dark2", drop=FALSE)
 ```{r}
 # read data
 url <- "1mZlGcQecowigXVUN_0HsnLPEpSaE0tXfoCfw6Lvv2vQ"
-data <- read_sheet(url, sheet = "Week4") %>%
+data <- read_sheet(url, sheet = "Week5") %>%
   filter(row_number() != 0)
 
 
@@ -55,7 +56,7 @@ n <- nrow(data)
 Row {data-height=400}
 -----------------------------------------------------------------------
 
-### How did you engage with Chapter 4?
+### How did you engage with Chapter 5?
 
 ```{r}
 subdat <- select(data, x = 2) %>%
@@ -67,14 +68,41 @@ ggplot(subdat, aes(x = x, fill = x)) +
   scale_x_discrete(name = "",  drop=FALSE) +
   scale_y_continuous(name = "", breaks = 0:11*5) +
   scale_fill +
-  coord_flip(ylim = c(0, n)) 
+  coord_flip(ylim = c(0, max(n, 5))) 
 ```
+
+### #GreatPsychPumpkinBattle
+
+```{r}
+lables <- c(emo::ji("no"),
+            emo::ji("person shrugging"), 
+            emo::ji("jack-o-lantern"))
+
+labels <- c("Definitely", "IDK", "Nope")
+
+subdat <- select(data, x = 5) %>%
+  mutate(x = ifelse(substr(x, 1, 1) == "D", "Definitely")) %>%
+  mutate(x = factor(x, 
+                    c("No, I hate Halloween",
+                      "I didn't know about this",
+                      "Definitely"),
+                    labels))
+
+ggplot(subdat, aes(x = x, fill = x)) +
+  geom_bar(show.legend = FALSE, colour = "black") +
+  scale_x_discrete(name = "",  drop=FALSE) +
+  scale_y_continuous(name = "", breaks = 0:11*5) +
+  scale_fill_manual(values = "darkorange", "white", "black") +
+  coord_flip(ylim = c(0, max(n, 5))) +
+  theme(axis.text.y = element_text(size = 30))
+```
+
 
 
 Row {data-height=400}
 -----------------------------------------------------------------------
 
-### List concepts you learned in Chapter 4 that you feel confident about.
+### List concepts you learned in Chapter 5 that you feel confident about.
 
 ```{r}
 omitted <- c(stop_words$word, "im", 0:9)
@@ -88,8 +116,8 @@ words <- select(data, confident = 3) %>%
 
 ggplot(words, aes(label = word, colour = word, size = n)) +
   geom_text_wordcloud_area() +
-  scale_size_area(max_size = 16) +
-  theme_minimal(base_size = 14) +
+  scale_size_area(max_size = 14) +
+  theme_minimal(base_size = 10) +
   scale_color_see_d(palette = "contrast") 
 ```
 
