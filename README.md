@@ -4,14 +4,14 @@
 
 ### Pre-class 
 
-- Fill out the [pre-class poll](https://forms.gle/8RzHoTMpUkpYeSUT9)
+- Fill out the [pre-class poll](https://forms.gle/fFpfMDrDzNjr9mPp7)
 - Open [Chapter 5](https://psyteachr.github.io/reprores-v2/joins.html)
 - Start up RStudio and open your project for exercise 5
 
 ### In Class
 
 - Start at 10:05 (remind Lisa to start recording!)
-- Reading Week changes
+- Reading Week changes & extra help
 - Chapter 5 exercise walk-through
 - break
 - Questions
