@@ -1,5 +1,18 @@
 # ReproRes 2021
 
+## Reading Week (2021-10-29)
+
+* Next week is Reading Week, so no class Friday
+* Office hours are by appointment only next week 
+    * DM me to arrange a time
+    * you can book appointments as a group
+* Access your [personal data for the final project on Moodle](https://moodle.gla.ac.uk/mod/assign/view.php?id=2667085)
+    * 20 people still have not submitted an access confirmation statement
+    * the "deadline" is today, but that's just a reminder
+    * there is no grade for this
+    * but you need the data and instructions to start working on your final project
+    * see the start of last week's class recording for more info on the project
+
 ## Class 05 (2021-10-22)
 
 ### Pre-class 
