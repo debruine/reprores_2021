@@ -15,6 +15,9 @@
 
 ## Class 05 (2021-10-22)
 
+* [Recording](https://uofglasgow.zoom.us/rec/share/8e08JHGvIvdXzvtBl0At2GdS7Z4WxvTwgm5Hr1CI9CvXPq8Gv2nRjQlyk6qo3Nhe.fSoJoYS2FjnGh_JQ)
+* [Poll 5](https://debruine.github.io/reprores_2021/poll-05.html)
+
 ### Pre-class 
 
 - Fill out the [pre-class poll](https://forms.gle/fFpfMDrDzNjr9mPp7)
