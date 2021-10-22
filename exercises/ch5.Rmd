@@ -1,0 +1,212 @@
+---
+title: 'Formative Exercise 05: Data Relations'
+output: 
+  html_document:
+    df_print: kable
+---
+
+```{r setup, include=FALSE}
+# please do not alter this code chunk
+knitr::opts_chunk$set(echo = TRUE,
+                      message = TRUE, 
+                      error = TRUE)
+
+library(tidyverse)
+library(reprores)
+
+# install the class package reprores to access built-in data
+# devtools::install_github("psyteachr/reprores-v2)
+# or download data from the website
+# https://psyteachr.github.io/reprores/data/data.zip
+```
+
+Edit the code chunks below and knit the document. You can pipe your objects to `glimpse()` or `print()` to display them.
+
+## Mutating joins
+
+### Question 1A
+
+Load the following data from the reprores package (or access the linked CSV files online). Each participant is identified by a unique `user_id`.
+
+* [`disgust_scores`](https://psyteachr.github.io/reprores/data/disgust_scores.csv)
+* [`personality_scores`](https://psyteachr.github.io/reprores/data/personality_scores.csv)
+* [`users`](https://psyteachr.github.io/reprores/data/users.csv)
+
+
+```{r ex-1a}
+disgust_scores <- read_csv("https://psyteachr.github.io/reprores/data/disgust_scores.csv")
+data("personality_scores", package = "reprores")
+users <- reprores::users
+```
+
+### Question 1B
+
+Add `users` data to the `disgust_scores` table.
+
+```{r ex-1b}
+study1 <- left_join(x = disgust_scores,
+                    y = users,
+                    by = "user_id") %>%
+  glimpse()
+```
+
+### Question 2
+
+Add the `users` data to the `disgust_scores` data, but have the columns from the participant table first.
+
+```{r ex-2}
+study2 <- right_join(x = users,
+                     y = disgust_scores,
+                     by = "user_id") %>%
+  glimpse()
+```
+
+### Question 3A
+
+Create a table with only `disgust_scores` and `personality_scores` data from the same `user_id` collected on the same `date`.
+
+```{r ex-3}
+study3 <- inner_join(x = disgust_scores,
+                     y = personality_scores,
+                     by = c("user_id", "date"))
+```
+
+
+### Question 3B
+
+Join data from the same `user_id`, regardless of `date`. Does this give you the same data table as above?
+    
+```{r ex-3-i}
+study3_nodate <- inner_join(x = disgust_scores,
+                     y = personality_scores,
+                     by = c("user_id"),
+                     suffix = c(".disgust", ".personality")
+                     )
+```
+
+
+### Question 4
+
+Create a table of the `disgust_scores` and `personality_scores` data containing _all_ of the data from both tables.
+
+    
+```{r ex-4}
+study4 <- full_join(x = disgust_scores,
+                    y = personality_scores,
+                    by = c("user_id", "date"))
+```
+
+## Filtering joins
+
+### Question 5
+
+Create a table of just the data from the `disgust_scores` table for users who completed the `personality_scores` questionnaire that same day.
+    
+```{r ex-5}
+study5 <- semi_join(x = disgust_scores,
+                    y = personality_scores,
+                    by = c("user_id", "date")) %>%
+  glimpse()
+```
+
+    
+### Question 6
+
+Create a table of data from `users` who did not complete either the `personality_scores` questionnaire or the `disgust_scores` questionnaire. (_Hint: this will require two steps._)
+
+    
+```{r ex-6}
+study6a <- anti_join(x = users,
+                    y = personality_scores,
+                    by = "user_id") 
+
+study6 <- anti_join(x = study6a,
+                    y = disgust_scores,
+                    by = "user_id") 
+```
+
+```{r ex-6_v1}
+study6_v1 <- anti_join(x = users,
+                    y = personality_scores,
+                    by = "user_id") %>%
+  anti_join(y = disgust_scores,
+            by = "user_id") 
+
+all.equal(study6, study6_v1)
+```
+
+```{r ex-6_v2}
+all_q <- full_join(x = disgust_scores,
+                   y = personality_scores,
+                   by = "user_id") 
+
+study6_v2 <- anti_join(x = users,
+                    y = all_q,
+                    by = "user_id") 
+
+all.equal(study6, study6_v2)
+```
+
+```{r}
+study_x1 <- left_join(x = users,
+                      y = personality_scores,
+                      by = "user_id")
+
+sudy_x2 <-  left_join(x = study_x1,
+                      y = disgust_scores,
+                      by = "user_id")
+```
+
+
+
+## Binding and sets
+
+### Question 7
+
+Load new user data from [users2](https://psyteachr.github.io/reprores/data/users2.csv). Bind this table and the original `users` table into a single table called `users_all`.
+
+```{r ex-7}
+users2 <- reprores::users2
+users_all <- bind_rows(users, users2)
+```
+
+
+### Question 8
+
+How many users are in both the first and second user table? Use code to get this number; don't read the row number from the environment and type it in. (_Hint: What does `nrow(mtcars)` return?_)
+    
+```{r ex-8}
+duplicate_users <- intersect(x = users, 
+                             y = users2)
+
+both_n <- nrow(duplicate_users)
+```
+
+### Question 9
+
+How many unique users are there in total across the first and second user tables?
+
+```{r ex-9}
+unique_users <- union(x = users,
+                      y = users2) %>%
+  nrow()
+```
+
+### Question 10
+
+How many users are in the first, but not the second, user table?
+
+```{r ex-10}
+first_users <- setdiff(x = users,
+                       y = users2)
+```
+
+### Question 11
+
+How many users are in the second, but not the first, user table?
+
+```{r ex-11}
+second_users <- setdiff(x = users2,
+                        y = users)
+```
+

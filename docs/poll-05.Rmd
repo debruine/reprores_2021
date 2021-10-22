@@ -40,7 +40,7 @@ scale_colour <- scale_colour_brewer(palette = "Dark2", drop=FALSE)
 # read data
 url <- "1mZlGcQecowigXVUN_0HsnLPEpSaE0tXfoCfw6Lvv2vQ"
 data <- read_sheet(url, sheet = "Week5") %>%
-  filter(row_number() != 0)
+  filter(row_number() != 1)
 
 
 engage <- c(book = "Read the book", 
@@ -74,14 +74,11 @@ ggplot(subdat, aes(x = x, fill = x)) +
 ### #GreatPsychPumpkinBattle
 
 ```{r}
-lables <- c(emo::ji("no"),
-            emo::ji("person shrugging"), 
-            emo::ji("jack-o-lantern"))
-
 labels <- c("Definitely", "IDK", "Nope")
 
 subdat <- select(data, x = 5) %>%
-  mutate(x = ifelse(substr(x, 1, 1) == "D", "Definitely")) %>%
+  filter(!is.na(x)) %>%
+  mutate(x = ifelse(substr(x, 1, 1) == "D", "Definitely", x)) %>%
   mutate(x = factor(x, 
                     c("No, I hate Halloween",
                       "I didn't know about this",
@@ -92,11 +89,26 @@ ggplot(subdat, aes(x = x, fill = x)) +
   geom_bar(show.legend = FALSE, colour = "black") +
   scale_x_discrete(name = "",  drop=FALSE) +
   scale_y_continuous(name = "", breaks = 0:11*5) +
-  scale_fill_manual(values = "darkorange", "white", "black") +
+  scale_fill_manual(values = c("darkorange", "white", "black")) +
   coord_flip(ylim = c(0, max(n, 5))) +
   theme(axis.text.y = element_text(size = 30))
 ```
 
+
+### Extra Help
+
+```{r}
+subdat <- select(data, x = 7) %>%
+  filter(!is.na(x)) %>%
+  separate_rows(x, sep = ", ")
+
+ggplot(subdat, aes(x = x, fill = x)) +
+  geom_bar(show.legend = FALSE, colour = "black") +
+  scale_x_discrete(name = "",  drop=FALSE) +
+  scale_y_continuous(name = "", breaks = 0:11*5) +
+  scale_fill +
+  coord_flip(ylim = c(0, max(n, 5)))
+```
 
 
 Row {data-height=400}

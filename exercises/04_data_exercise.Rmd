@@ -247,12 +247,12 @@ The function call `runif(n, min, max)` will draw `n` numbers from a uniform dist
 * `prop_sig`: the proportion of those p-values that were significant
 
 ```{r Q19}
-set.seed(8675309) # ensures you get the same random numbers each time you run this code chunk
+set.seed(92319) # ensures you get the same random numbers each time you run this code chunk
 
-pvals    <- NULL
-is_sig   <- NULL
-sig_vals <- NULL
-prop_sig <- NULL
+pvals    <- runif(n = 10000, min = 0, max = 1)
+is_sig   <- pvals < .05
+sig_vals <- pvals[is_sig]
+prop_sig <- mean(is_sig)
 ```
 
 

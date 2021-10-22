@@ -1,0 +1,57 @@
+---
+title: "Questions"
+output: 
+  html_document:
+    df_print: kable
+    toc: true
+    toc_float: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(kableExtra)
+```
+
+
+## Reverse data
+
+```{r}
+data <- tibble(
+  category = rep(c("A", "B", "C", NA), each = 10),
+  value = c(NA, rnorm(n = 39))
+) %>%
+  drop_na() %>%
+  mutate(category = factor(x = category,
+                           levels = c("C", "B", "A")))
+
+
+
+ggplot(data, aes(x = category, y = value)) +
+  geom_violin()
+```
+
+## Checking for NAs
+
+```{r}
+!is.na(c(1, 2, NA, 4))
+```
+
+## Fancier Tables
+
+```{r, echo = FALSE}
+droids <- starwars %>%
+  filter(species == "Droid") %>%
+  select(name:skin_color, homeworld)
+
+kable(droids) %>%
+  kable_styling(full_width = FALSE)
+```
+
+
+```{r}
+DT::datatable(starwars)
+```
+
+
+

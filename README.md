@@ -13,7 +13,8 @@
 - Start at 10:05 (remind Lisa to start recording!)
 - Reading Week changes & extra help
 - Chapter 5 exercise walk-through
-- break
+    - Question 4: specify what to join on!
+- break (11:07 - 11:15)
 - Questions
 
 ### After Class
