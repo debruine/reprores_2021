@@ -2,7 +2,7 @@
 
 ## Class 06 (2021-11-05)
 
-- Fill out the [pre-class oll](https://forms.gle/w6xkWrmoRsp5dtsb7)
+- Fill out the [pre-class poll](https://forms.gle/w6xkWrmoRsp5dtsb7)
 - Open [Chapter 6](https://psyteachr.github.io/reprores-v2/tidyr.html)
 - Start up RStudio and open your project for exercise 6
 

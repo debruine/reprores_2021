@@ -1,5 +1,5 @@
 ---
-title: "ReproRes Poll Class 05"
+title: "ReproRes Poll Class 06"
 output: 
   flexdashboard::flex_dashboard:
     orientation: rows
@@ -16,7 +16,7 @@ knitr::opts_chunk$set(
   fig.height = 5
 )
 
-# [Poll](https://forms.gle/8RzHoTMpUkpYeSUT9)
+# [Poll](https://forms.gle/w6xkWrmoRsp5dtsb7)
 
 library(flexdashboard)
 library(kableExtra)
@@ -27,7 +27,6 @@ library(ggthemes)
 library(see)
 library(ggwordcloud) # for word clouds
 library(tidytext) # for manipulating text for word clouds
-library(emo)
 ```
 
 ```{r, eval = TRUE}
@@ -39,8 +38,8 @@ scale_colour <- scale_colour_brewer(palette = "Dark2", drop=FALSE)
 ```{r}
 # read data
 url <- "1mZlGcQecowigXVUN_0HsnLPEpSaE0tXfoCfw6Lvv2vQ"
-data <- read_sheet(url, sheet = "Week5") %>%
-  filter(row_number() != 1)
+data <- read_sheet(url, sheet = "Week6") %>%
+  filter(row_number() != 0)
 
 
 engage <- c(book = "Read the book", 
@@ -56,7 +55,7 @@ n <- nrow(data)
 Row {data-height=400}
 -----------------------------------------------------------------------
 
-### How did you engage with Chapter 5?
+### How did you engage with Chapter 6?
 
 ```{r}
 subdat <- select(data, x = 2) %>%
@@ -71,36 +70,23 @@ ggplot(subdat, aes(x = x, fill = x)) +
   coord_flip(ylim = c(0, max(n, 5))) 
 ```
 
-### #GreatPsychPumpkinBattle
+
+### Final Assessment
 
 ```{r}
-labels <- c("Definitely", "IDK", "Nope")
+resp <- c("Downloaded the data",
+  "Started a project",
+  "Created the Rmd",
+  "ToC from headers",
+  "Created a .bib file",
+  "Loaded the data",
+  "Some data processing",
+  "Some data visualisation")
 
 subdat <- select(data, x = 5) %>%
   filter(!is.na(x)) %>%
-  mutate(x = ifelse(substr(x, 1, 1) == "D", "Definitely", x)) %>%
-  mutate(x = factor(x, 
-                    c("No, I hate Halloween",
-                      "I didn't know about this",
-                      "Definitely"),
-                    labels))
-
-ggplot(subdat, aes(x = x, fill = x)) +
-  geom_bar(show.legend = FALSE, colour = "black") +
-  scale_x_discrete(name = "",  drop=FALSE) +
-  scale_y_continuous(name = "", breaks = 0:11*5) +
-  scale_fill_manual(values = c("darkorange", "white", "black")) +
-  coord_flip(ylim = c(0, max(n, 5))) +
-  theme(axis.text.y = element_text(size = 30))
-```
-
-
-### Extra Help
-
-```{r}
-subdat <- select(data, x = 7) %>%
-  filter(!is.na(x)) %>%
-  separate_rows(x, sep = ", ")
+  separate_rows(x, sep = ", ") %>%
+  mutate(x = factor(x, rev(resp)))
 
 ggplot(subdat, aes(x = x, fill = x)) +
   geom_bar(show.legend = FALSE, colour = "black") +
@@ -114,7 +100,7 @@ ggplot(subdat, aes(x = x, fill = x)) +
 Row {data-height=400}
 -----------------------------------------------------------------------
 
-### List concepts you learned in Chapter 5 that you feel confident about.
+### List concepts you learned in Chapter 6 that you feel confident about.
 
 ```{r}
 omitted <- c(stop_words$word, "im", 0:9)
@@ -135,7 +121,7 @@ ggplot(words, aes(label = word, colour = word, size = n)) +
 
 
 
-### List concepts you learned in Chapter 5 that you feel less confident about and would like reviewed in class today.
+### List concepts you learned in Chapter 6 that you feel less confident about and would like reviewed in class today.
 
 ```{r}
 omitted <- c(stop_words$word, "im", 0:9)
