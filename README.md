@@ -2,6 +2,8 @@
 
 ## Class 07 (2021-11-13)
 
+### Pre-class 
+
 - Fill out the pre-class poll
 - Open [Chapter 7](https://psyteachr.github.io/reprores-v2/dplyr.html)
 - Start up RStudio and open your project for exercise 7
@@ -15,9 +17,11 @@
 
 ## Class 06 (2021-11-05)
 
-* [Recording]()
+* [Recording](https://uofglasgow.zoom.us/rec/share/5Rvr0vVcNj6nlzXjUw8mHIRcUCOEjCAeK6yolO-kk9rQP6hqZdNqX5740B29Pbrt.ql4xXJX32dl5wAwi)
 * [Poll 6](https://debruine.github.io/reprores_2021/polls/poll-06.html)
 * [Assessment Qs](https://debruine.github.io/reprores_2021/assessment_help.html)
+
+### Pre-class 
 
 - Fill out the [pre-class poll](https://forms.gle/w6xkWrmoRsp5dtsb7)
 - Open [Chapter 6](https://psyteachr.github.io/reprores-v2/tidyr.html)
