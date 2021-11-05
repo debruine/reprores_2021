@@ -1,5 +1,18 @@
 # ReproRes 2021
 
+## Class 06 (2021-11-05)
+
+- Fill out the [pre-class oll](https://forms.gle/w6xkWrmoRsp5dtsb7)
+- Open [Chapter 6](https://psyteachr.github.io/reprores-v2/tidyr.html)
+- Start up RStudio and open your project for exercise 6
+
+### In Class
+
+- Start at 10:05 (remind Lisa to start recording!)
+- Chapter 6 exercise walk-through
+- break 
+- Final assessment questions
+
 ## Reading Week (2021-10-29)
 
 * Next week is Reading Week, so no class Friday
