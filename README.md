@@ -1,6 +1,23 @@
 # ReproRes 2021
 
+## Class 07 (2021-11-13)
+
+- Fill out the pre-class poll
+- Open [Chapter 7](https://psyteachr.github.io/reprores-v2/dplyr.html)
+- Start up RStudio and open your project for exercise 7
+
+### In Class
+
+- Start at 10:05 (remind Lisa to start recording!)
+- Chapter 7 exercise walk-through
+- break
+- Final assessment questions
+
 ## Class 06 (2021-11-05)
+
+* [Recording]()
+* [Poll 6](https://debruine.github.io/reprores_2021/polls/poll-06.html)
+* [Assessment Qs](https://debruine.github.io/reprores_2021/assessment_help.html)
 
 - Fill out the [pre-class poll](https://forms.gle/w6xkWrmoRsp5dtsb7)
 - Open [Chapter 6](https://psyteachr.github.io/reprores-v2/tidyr.html)
@@ -10,8 +27,11 @@
 
 - Start at 10:05 (remind Lisa to start recording!)
 - Chapter 6 exercise walk-through
-- break 
+    - Connect with pipes name object `z`
+    - Final Q: use `separate_rows()`
+- break (11:33 - 11:38)
 - Final assessment questions
+
 
 ## Reading Week (2021-10-29)
 
@@ -29,7 +49,7 @@
 ## Class 05 (2021-10-22)
 
 * [Recording](https://uofglasgow.zoom.us/rec/share/8e08JHGvIvdXzvtBl0At2GdS7Z4WxvTwgm5Hr1CI9CvXPq8Gv2nRjQlyk6qo3Nhe.fSoJoYS2FjnGh_JQ)
-* [Poll 5](https://debruine.github.io/reprores_2021/poll-05.html)
+* [Poll 5](https://debruine.github.io/reprores_2021/polls/poll-05.html)
 
 ### Pre-class 
 
@@ -57,7 +77,7 @@
 ## Class 04 (2021-10-15)
 
 * [Recording](https://uofglasgow.zoom.us/rec/share/4EGBKo5ndUPsesOAzXglFsVAK2FA6ZJpePtPFUnpIf9ujgztxdQQ1Sk3flh9Z404.VR5SzSl53HtGzmHq)
-* [Poll 4](https://debruine.github.io/reprores_2021/poll-04.html)
+* [Poll 4](https://debruine.github.io/reprores_2021/polls/poll-04.html)
 
 ### Pre-class 
 
@@ -82,7 +102,7 @@
 ## Class 03 (2021-10-08)
 
 * [Recording](https://uofglasgow.zoom.us/rec/share/f4NZgTs31v9CKfPvJmC5LgG5RPtcqb-EI-s82r4lDxe9FfGYv7dOXoCTwNygb0nN.f2lqy5TSoKjQW1zE)
-* [Poll 3](https://debruine.github.io/reprores_2021/poll-03.html)
+* [Poll 3](https://debruine.github.io/reprores_2021/polls/poll-03.html)
 
 ### Pre-class
 
@@ -108,7 +128,7 @@
 ## Class 02 (2021-10-01)
 
 * [Recording](https://uofglasgow.zoom.us/rec/share/WyZVEBMx9KDMvz03yd-N9NidJYKC6rrtnJRCqiF7rOaL3UDC4uLpHRR-lduDrXrl.jD7EfFllyrA_elUm)
-* [Poll 2](https://debruine.github.io/reprores_2021/poll-02.html)
+* [Poll 2](https://debruine.github.io/reprores_2021/polls/poll-02.html)
 
 ### Pre-class
 
@@ -141,7 +161,7 @@
 ## Class 01 (2021-09-24)
 
 * [Recording](https://uofglasgow.zoom.us/rec/share/V1exB4gAu6Q-hZrEhv9NScaXoUw9aijGsQHnXQf8YDvZmPEIqXCdAVrfWgmanWUq.NKVM6RbYlU0nFzhK): check the Teams channel for the recording passcode
-* [Poll 1](https://debruine.github.io/reprores_2021/poll-01.html)
+* [Poll 1](https://debruine.github.io/reprores_2021/polls/poll-01.html)
 
 ### Pre-class 
 

@@ -1,0 +1,85 @@
+---
+title: "Untitled"
+author: "Lisa DeBruine"
+date: "05/11/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+```
+
+## Combining Data
+
+```{r}
+sub_cond1 <- tribble(
+  ~id, ~age,
+  1, 20,
+  2, 24
+) %>%
+  mutate("cond" = 1)
+
+sub_cond2 <- tribble(
+  ~id, ~age,
+  3, 18,
+  4, 19
+) %>%
+  mutate("cond" = 2)
+```
+
+What should the table look like?
+
+```{r}
+tribble(
+  ~id, ~age, ~cond,
+  1, 20, 1,
+  2, 24, 1,
+  3, 18, 2,
+  4, 19, 2
+)
+```
+
+Combine rows
+
+```{r}
+bind_rows(sub_cond1, sub_cond2)
+```
+
+## Reverse coding
+
+```{r}
+table_key <- tribble(
+  ~question,
+  "q01-R", 
+  "q02-F",
+  "q03-R"
+) %>%
+  separate(question, into = c("q", "rev"), sep = "-")
+```
+
+```{r}
+questions <- tribble(
+  ~reversed, ~score,
+  TRUE, 2,
+  FALSE, 2,
+  TRUE, 5, 
+  FALSE, 4
+) %>%
+  mutate(correct_score = ifelse(reversed, 6-score, score)) %>%
+  print()
+```
+
+Reverse 5-point scale
+
+1, 2, 3, 4, 5  
+5, 4, 3, 2, 1
+
+Reverse 7-point scale
+
+1, 2, 3, 4, 5, 6, 7  
+7, 6, 5, 4, 3, 2, 1
+
+
+
+
