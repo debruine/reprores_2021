@@ -1,0 +1,30 @@
+---
+title: "General Feedback"
+author: "Lisa DeBruine"
+date: "12/11/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE)
+library(tidyverse)
+library(googlesheets4)
+options(gargle_oauth_email = "debruine@gmail.com")
+```
+
+```{r}
+# read data
+url <- "1mZlGcQecowigXVUN_0HsnLPEpSaE0tXfoCfw6Lvv2vQ"
+data <- purrr::map_df(paste0("Week", 3:7), function(sheet) {
+    data <- read_sheet(url, sheet) %>%
+      select(feedback = starts_with("General feedback")) %>%
+      mutate(week = sheet, feedback = as.character(feedback)) %>%
+      filter(!is.na(feedback))
+  })
+```
+
+```{r}
+select(data, week, feedback) %>% DT::datatable()
+```
+
+

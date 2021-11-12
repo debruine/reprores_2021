@@ -1,6 +1,24 @@
 # ReproRes 2021
 
+## Class 08 (2021-11-19)
+
+### Pre-class 
+
+- Fill out the pre-class poll
+- Open [Chapter 8](https://psyteachr.github.io/reprores-v2/glm.html)
+- Start up RStudio and open your project for exercise 8
+
+### In Class
+
+- Start at 10:05 (remind Lisa to start recording!)
+- Chapter 8 exercise walk-through
+- break
+- Final assessment questions
+
 ## Class 07 (2021-11-13)
+
+* [Recording](https://uofglasgow.zoom.us/rec/share/wMfFFWvdm7_lMCEPi2n4BMucrtas28mgEa9YwYWRTPr5E1-Q9hv2dsFLj8RyCpfF.OEcdnHf6_3V68dS-)
+* [Poll 7](https://debruine.github.io/reprores_2021/polls/poll-07.html)
 
 ### Pre-class 
 
@@ -12,7 +30,9 @@
 
 - Start at 10:05 (remind Lisa to start recording!)
 - Chapter 7 exercise walk-through
-- break
+    - Q1 - "records" is ambiguous rows or babies?
+    - all pull in answer sheet should have column names
+- break (11:32 - 11:37)
 - Final assessment questions
 
 ## Class 06 (2021-11-05)

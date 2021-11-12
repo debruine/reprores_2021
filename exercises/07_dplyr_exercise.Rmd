@@ -1,0 +1,314 @@
+---
+title: 'Formative Exercise 07: Data Wrangling'
+output: 
+  html_document:
+    df_print: kable
+---
+
+```{r setup, include=FALSE}
+# please do not alter this code chunk
+knitr::opts_chunk$set(echo = TRUE,
+                      message = FALSE, 
+                      error = TRUE)
+
+library(tidyverse)
+library(ukbabynames)
+library(reprores)
+
+# install the class package reprores to access built-in data
+# devtools::install_github("psyteachr/reprores-v2)
+# or download data from the website
+# https://psyteachr.github.io/reprores/data/data.zip
+```
+
+Edit the code chunks below and knit the document. You can pipe your objects to `glimpse()` or `print()` to display them.
+
+## UK Baby Names
+
+Here we will convert the data table `scotbabynames` from the ukbabynames package to a tibble and assign it the variable name `sbn`. Use this data tibble for questions 1-13.
+
+```{r sbn}
+# do not alter this code chunk
+sbn <- as_tibble(scotbabynames) # convert to a tibble
+```
+
+
+### Question 1
+
+How many records are in the dataset?
+
+```{r Q1}
+nrecords <- sum(sbn$n)
+```
+
+The total number of babies in this dataset is `r nrecords`.
+
+
+### Question 2
+
+Remove the column `rank` from the dataset.
+
+```{r Q2}
+norank <- sbn %>%
+  select(-rank)
+```
+
+### Question 3
+
+What is the range of birth years contained in the dataset? Use `summarise` to make a table with two columns: `minyear` and `maxyear`.
+
+```{r Q3}
+birth_range <- sbn %>%
+  summarise(minyear = min(year, na.rm = TRUE),
+            maxyear  = max(year, na.rm = TRUE)) %>%
+  print()
+```
+
+### Question 4
+
+Make a table of only the data from babies named Hermione.
+
+```{r Q4}
+hermiones <- sbn %>%
+  filter(name == "Hermione") %>%
+  # this pulls out the total number of hermiones
+  #summarise(total = sum(n)) %>%
+  #pull(total) %>%
+  print()
+```
+
+### Question 5
+
+Sort the dataset by sex and then by year (descending) and then by rank (descending).
+
+```{r Q5}
+sorted_babies <- sbn %>%
+  arrange(sex, desc(year), desc(rank))
+```
+
+### Question 6
+
+Create a new numeric column, `decade`, that contains the decade of birth (1990, 2000, 2010).  Hint: see `?floor`
+
+```{r Q6}
+sbn_decade <- sbn %>%
+  mutate(decade = year/10,
+         decade = floor(decade),
+         decade = decade * 10) %>%
+  print()
+```
+
+### Question 7
+
+Make a table of only the data from male babies named Courtney that were born between 1988 and 2001 (inclusive).
+
+```{r Q7}
+courtney <- sbn %>%
+  filter(sex == "M",
+         name == "Courtney",
+         year >= 1988,
+         year <= 2001) %>%
+  print()
+```
+
+
+### Question 8
+
+How many distinct names are represented in the dataset? Make sure `distinct_names` is an integer, not a data table.
+
+```{r Q8}
+distinct_names <- n_distinct(sbn$name)
+```
+
+### Question 9
+
+Make a table of only the data from the Scottish female babies named Frankie that were born before 1990 or after 2015. Order it by year.
+
+```{r Q9}
+frankie <- sbn %>%
+  filter(sex == "F",
+         name == "Frankie",
+         year < 1990 | year > 2015) %>%
+  print()
+```
+
+```{r, eval = FALSE, echo = FALSE}
+# checking the frankie table for consistency
+unique(frankie$name)
+unique(frankie$year)
+```
+
+
+### Question 10
+
+How many total babies in the dataset were named 'Emily'? Make sure `emily` is an integer, not a data table.
+
+```{r Q10}
+emily <- sbn %>%
+  filter(name == "Emily") %>%
+  summarise(total = sum(n)) %>%
+  pull(total) %>%
+  print()
+```
+
+### Question 11
+
+How many distinct names are there for each sex?
+
+```{r Q11}
+names_per_sex <- sbn %>%
+  group_by(sex) %>%
+  summarise(n = n_distinct(name)) %>%
+  print()
+```
+
+### Question 12
+
+What is the most popular name in the `sbn` dataset? Make sure `most_popular_scottish_name` is a character vector, not a table.
+
+```{r Q12}
+most_popular_scottish_name <- sbn %>%
+  group_by(name) %>%
+  summarise(total = sum(n)) %>%
+  slice_max(order_by = total, n = 1, with_ties = FALSE) %>%
+  pull(name) %>%
+  print()
+```
+
+### Question 12b
+
+What is the most popular name for each nation and sex in the `ukbabynames` dataset? Make a table with the columns `nation`, `male` and `female`, with three rows: one for each nation.
+
+```{r Q12b}
+most_popular <- ukbabynames %>%
+  group_by(nation, sex, name) %>%
+  summarise(total = sum(n)) %>%
+  ungroup() %>%
+  group_by(nation, sex) %>%
+  slice_max(order_by = total, n = 1, with_ties = FALSE) %>%
+  select(-total) %>%
+  pivot_wider(names_from = sex,
+              values_from = name) %>%
+  select(nation, male = M, female = F) %>%
+  print()
+```
+
+### Question 13
+
+How many babies were born each year for each sex?  Make a plot where the y-axis starts at 0 so you have the right perspective on changes.
+
+```{r Q13}
+babies_per_year <- sbn %>%
+  group_by(year, sex) %>%
+  summarise(total = sum(n)) %>%
+  ungroup()
+
+ymax <- (max(babies_per_year$total) / 10000) %>%
+  ceiling() * 10000
+
+ggplot(babies_per_year,
+         aes(x = year, y = total, color = sex)) +
+  geom_line() +
+  ylim(0, ymax)
+```
+
+## Select helpers
+
+Load the dataset [reprores::personality](https://psyteachr.github.io/reprores/data/personality.csv).
+
+Select only the personality question columns (not the user_id or date).
+
+```{r SH1}
+q_only <- personality %>%
+  select(-user_id, -date)
+```
+
+Select the `user_id` column and all of the columns with questions about openness.
+
+```{r SH2}
+openness <- personality %>%
+  select(user_id, starts_with("Op")) %>%
+  glimpse()
+```
+
+Select the `user_id` column and all of the columns with the first question for each personality trait.
+
+```{r SH3}
+q1 <- personality %>%
+  select(user_id, ends_with("1")) %>%
+  glimpse()
+```
+
+
+## Window fuctions
+
+The code below sets up a fake dataset where 10 subjects respond to 20 trials with a `dv` on a 5-point Likert scale. 
+
+```{r window-setup}
+set.seed(10)
+
+fake_data <- tibble(
+  subj_id = rep(1:10, each = 20),
+  trial = rep(1:20, times = 10),
+  dv = sample.int(5, 10*20, TRUE)
+)
+```
+
+### Question 14
+
+You want to know how many times each subject responded with the same dv as their last trial. For example, if someone responded 2,3,3,3,4 for five trials they would have repeated their previous response on the third and fourth trials. Use an offset function to determine how many times each subject repeated a response.
+
+```{r window}
+repeated_data <- fake_data %>%
+  arrange(subj_id, trial) %>%
+  group_by(subj_id) %>%
+  mutate(prev_dv = lag(dv),
+         is_repeat = prev_dv == dv) %>%
+  summarise(repeats = sum(is_repeat, na.rm = TRUE)) %>%
+  ungroup() %>%
+  print()
+```
+
+### Question 15
+
+Create a table `too_many_repeats` with the subject who have the two highest-ranked and second-highest ranked unique `repeats` values from `repeated_data` using ranking functions. For example, if 3 people are tied for the highest value and 2 people are tied for the next-highest value, the table would return 5 people. (_Hint: check the differences among `rank()`, `min_rank()` and `dense_rank()`_)
+
+```{r}
+too_many_repeats <- repeated_data %>%
+  slice_max(order_by = repeats, n = 2, with_ties = TRUE)
+```
+
+
+## Advanced Questions
+
+There are several ways to complete the following two tasks. Different people will solve them different ways, but you should be able to tell if your answers make sense.
+
+### Question 16
+
+Load the dataset [reprores::family_composition](https://psyteachr.github.io/reprores/data/family_composition.csv) from last week's exercise.
+
+Calculate how many siblings of each sex each person has, narrow the dataset down to people with fewer than 6 siblings, and generate at least two different ways to graph this.
+
+```{r Q16-data}
+sib6 <- NULL
+```
+    
+```{r Q16-plot1}
+ggplot()
+```
+
+```{r Q16-plot2}
+ggplot()
+```   
+
+
+### Question 17
+
+Use the dataset [reprores::eye_descriptions](https://psyteachr.github.io/reprores/data/eye_descriptions.csv) from last week's exercise.
+
+Create a list of the 10 most common descriptions from the eyes dataset. Remove useless descriptions and merge redundant descriptions.
+    
+```{r Q17}
+eyes <- NULL
+```
+

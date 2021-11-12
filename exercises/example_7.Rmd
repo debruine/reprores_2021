@@ -1,0 +1,98 @@
+---
+title: "My Assessment"
+author: "Lisa DeBruine"
+date: "12/11/2021"
+bibliography: bilio.bib
+output: 
+  html_document:
+    toc: true
+    toc_float: 
+      collapsed: false
+    toc_depth: 3
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = TRUE)
+library(tidyverse)
+```
+
+
+I will be using the tidyverse package [@tidyverse].
+
+## Data Import and Wrangling
+
+```{r, echo = TRUE}
+p <- read_csv("exercises/data/personality.csv")
+
+n_obs <- nrow(p)
+```
+
+
+The personality dataset has `r n_obs` observations.
+
+### Reverse Coding
+
+
+```{r}
+to_reverse <- c("B", "D")
+
+simdat <- tibble(
+  id = 1:20,
+  A = sample(1:7, 20, replace = TRUE),
+  B = sample(1:7, 20, replace = TRUE),
+  C = sample(1:7, 20, replace = TRUE),
+  D = sample(1:7, 20, replace = TRUE)
+) %>%
+  pivot_longer(cols = A:D,
+               names_to = "question",
+               values_to = "score") %>%
+  mutate(reversed = question %in% to_reverse,
+         revscores = ifelse(test = reversed, 
+                            yes = 8-score, 
+                            no = score)
+         )
+
+```
+
+
+
+## Data Simulation
+
+```{r}
+library(faux)
+
+
+data <- sim_design(between = list(grp = c("A", "B")), 
+                   n = 20,
+                   mu = c(10, 10.5),
+                   sd = 2,
+                   dv = "score")
+```
+
+
+## Analysis
+
+### T-Test
+
+```{r}
+t.test(score ~ grp, data = data)
+```
+
+### GLM
+
+```{r}
+lm(score ~ grp, data = data) %>% summary()
+```
+
+
+```{r}
+mtcars %>%
+  mutate(new = "a") %>%
+  select(new, mpg:carb)
+```
+
+
+
+
+## References
+
