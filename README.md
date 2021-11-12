@@ -4,7 +4,7 @@
 
 ### Pre-class 
 
-- Fill out the pre-class poll
+- Fill out the [pre-class poll](https://forms.gle/bUPFtEepBr3XVWrz5)
 - Open [Chapter 7](https://psyteachr.github.io/reprores-v2/dplyr.html)
 - Start up RStudio and open your project for exercise 7
 
