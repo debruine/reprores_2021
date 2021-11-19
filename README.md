@@ -4,7 +4,7 @@
 
 ### Pre-class 
 
-- Fill out the pre-class poll
+- Fill out the [pre-class poll](https://forms.gle/8PvRnTakZzgyjVPNA)
 - Open [Chapter 8](https://psyteachr.github.io/reprores-v2/glm.html)
 - Start up RStudio and open your project for exercise 8
 
