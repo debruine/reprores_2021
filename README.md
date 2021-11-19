@@ -4,12 +4,14 @@
 
 * [Recording]()
 * [Poll 8](https://debruine.github.io/reprores_2021/polls/poll-08.html)
-* [Today's exercise]()
+* [Today's script](https://github.com/debruine/reprores_2021/blob/master/exercises/08_glm_exercise.Rmd)
+* [Mean/SD vs GLM simulation tutorial](https://debruine.github.io/tutorials/sim-data.html)
+* [Contrasts tutorial](https://debruine.github.io/faux/articles/contrasts.html)
 
 Extra Help sessions :
-    - Monday Nov 29 12-2
-    - Tuesday Dec 7 12-2
-    - Friday Dec 10 10-12
+    - Monday Nov 29, 12-2
+    - Tuesday Dec 7, 12-2
+    - Friday Dec 10, 10-12
 
 ### Pre-class 
 
