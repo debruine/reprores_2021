@@ -7,10 +7,11 @@
 * [Today's script](https://github.com/debruine/reprores_2021/blob/master/exercises/08_glm_exercise.Rmd)
 * [Mean/SD vs GLM simulation tutorial](https://debruine.github.io/tutorials/sim-data.html)
 * [Contrasts tutorial](https://debruine.github.io/faux/articles/contrasts.html)
-* Extra Help sessions
+* Extra Help sessions (at class Zoom link)
     - Monday Nov 29, 12-2
     - Tuesday Dec 7, 12-2
     - Friday Dec 10, 10-12
+    - office hours or by appointment
 
 ### Pre-class 
 
