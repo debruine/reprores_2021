@@ -2,6 +2,15 @@
 
 ## Class 08 (2021-11-19)
 
+* [Recording]()
+* [Poll 8](https://debruine.github.io/reprores_2021/polls/poll-08.html)
+* [Today's exercise]()
+
+Extra Help sessions :
+    - Monday Nov 29 12-2
+    - Tuesday Dec 7 12-2
+    - Friday Dec 10 10-12
+
 ### Pre-class 
 
 - Fill out the [pre-class poll](https://forms.gle/8PvRnTakZzgyjVPNA)
@@ -12,7 +21,8 @@
 
 - Start at 10:05 (remind Lisa to start recording!)
 - Chapter 8 exercise walk-through
-- break
+    - re-write Q5 with SD and sigma() in mind
+- break (11:06 - 11:15)
 - Final assessment questions
 
 ## Class 07 (2021-11-13)
