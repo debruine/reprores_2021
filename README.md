@@ -2,7 +2,7 @@
 
 ## Class 08 (2021-11-19)
 
-* [Recording]()
+* [Recording](https://uofglasgow.zoom.us/rec/share/ZIYgs0VeUdChPelEml9fOHVp9Q_AKWm06JfzwWmhd7fuSsrqKfdNeqRqqfn3Kiv1.X1sRNsl6ceaLQVbg)
 * [Poll 8](https://debruine.github.io/reprores_2021/polls/poll-08.html)
 * [Today's script](https://github.com/debruine/reprores_2021/blob/master/exercises/08_glm_exercise.Rmd)
 * [Mean/SD vs GLM simulation tutorial](https://debruine.github.io/tutorials/sim-data.html)
