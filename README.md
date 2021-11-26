@@ -16,6 +16,10 @@ Likely to be cancelled due to the strike action. Get the latest info at the [Gla
 
 ## Class 09 (2021-11-26)
 
+* [Recording]()
+* [Poll 9](https://debruine.github.io/reprores_2021/polls/poll-09.html)
+* [Today's script](https://github.com/debruine/reprores_2021/blob/master/exercises/09_func_exercise.Rmd)
+
 ### Pre-class
 
 - Fill out the [pre-class poll](https://forms.gle/jikzJaoLK77PSWyo8)
@@ -27,8 +31,7 @@ Likely to be cancelled due to the strike action. Get the latest info at the [Gla
 
 - Start at 10:05 (remind Lisa to start recording!)
 - Chapter 9 exercise walk-through
-- break
-- Power simulation example
+    - Q12 - specify normal dist
 
 ## Class 08 (2021-11-19)
 
