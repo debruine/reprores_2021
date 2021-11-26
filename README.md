@@ -1,5 +1,19 @@
 # ReproRes 2021
 
+## Extra Help Sessions
+
+These will be at the class Zoom link
+
+- Monday Nov 29, 12-2
+- Tuesday Dec 7, 12-2
+- Friday Dec 10, 10-12
+- office hours or by appointment
+
+
+## Class 10 (2011-12-03)
+
+Likely to be cancelled due to the strike action. Get the latest info at the [Glasgow UCU](https://ucuglasgow.wordpress.com/) site.
+
 ## Class 09 (2021-11-26)
 
 ### Pre-class
