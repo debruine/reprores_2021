@@ -1,5 +1,20 @@
 # ReproRes 2021
 
+## Class 09 (2021-11-26)
+
+### Pre-class
+
+- Fill out the [pre-class poll](https://forms.gle/jikzJaoLK77PSWyo8)
+- Open [Chapter 9](https://psyteachr.github.io/reprores-v2/func.html)
+- Start up RStudio and open your project for exercise 9
+
+### In Class
+
+- Start at 10:05 (remind Lisa to start recording!)
+- Chapter 9 exercise walk-through
+- break
+- Power simulation example
+
 ## Class 08 (2021-11-19)
 
 * [Recording](https://uofglasgow.zoom.us/rec/share/ZIYgs0VeUdChPelEml9fOHVp9Q_AKWm06JfzwWmhd7fuSsrqKfdNeqRqqfn3Kiv1.X1sRNsl6ceaLQVbg)
