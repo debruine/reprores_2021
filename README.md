@@ -21,6 +21,7 @@ Likely to be cancelled due to the strike action. Get the latest info at the [Gla
 - Fill out the [pre-class poll](https://forms.gle/jikzJaoLK77PSWyo8)
 - Open [Chapter 9](https://psyteachr.github.io/reprores-v2/func.html)
 - Start up RStudio and open your project for exercise 9
+- Check the Teams channel for the generic feedback from last year's assessment
 
 ### In Class
 
