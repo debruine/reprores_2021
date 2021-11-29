@@ -7,7 +7,9 @@ output: html_document
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+#library(car)
 library(tidyverse)
+
 ```
 
 ## Aleks Q1
@@ -28,7 +30,7 @@ dat <- data.frame(
   )
 ```
 
-Debug outside session. Seems an esoteric error.
+The car package was masking the recode function. Fix by loading car before tidyverse or using dplyr::recode.
 
 
 ## power calc
@@ -118,8 +120,8 @@ power <- mean(pvals < alpha) %>% print()
 ## power iterator
 
 ```{r}
-mypow <- function(a, b, reps = 100) {
-  pvals <- replicate(reps, mysim(n_a = a, n_b = b))
+mypow <- function(effect, reps = 100) {
+  pvals <- replicate(reps, mysim(n_a = 25, n_b = 25, effect = effect))
   alpha <- 0.025
   power <- mean(pvals < alpha)
   
@@ -141,6 +143,41 @@ ggplot(pwer_grid, aes(x = a, y = b, fill = power)) +
   geom_text(aes(label = power), color = "white")
 ```
 
+
+## Two outputs from a function
+
+```{r}
+toyfunc <- function() {
+  dat <- faux::sim_design(
+    between = 2,
+    n = 200, 
+    mu = c(10, 10.5),
+    sd = 1,
+    plot = FALSE
+  )
+  
+  mytest <- lm(y ~ B1, data = dat)
+  
+  # return multiple values as a named list or a data frame
+  # list(
+  #   intercept = mytest$coefficients[[1]],
+  #   effect = mytest$coefficients[[2]]
+  # )
+  
+  # or
+  broom::tidy(mytest)
+}
+
+toyfunc()
+```
+
+
+```{r}
+map_df(1:100, ~toyfunc()) %>%
+  filter(term == "B1B1b") %>%
+  ggplot(aes(x = estimate)) +
+  geom_density()
+```
 
 
 
