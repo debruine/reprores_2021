@@ -1,0 +1,147 @@
+---
+title: "Extra Help"
+author: "Lisa DeBruine"
+date: "29/11/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+```
+
+## Aleks Q1
+
+```{r}
+n_per_grp <- 100
+mu <- 800 # average RT
+effect <- 50 # average difference between congruent and incongruent trials
+error_sd <- 100 # standard deviation of the error term
+trial_types <- c("congruent" = 0.5, "incongruent" = -0.5) # effect code
+dat <- data.frame(
+  trial_type = rep(names(trial_types), each = n_per_grp)
+) %>%
+  mutate(
+    trial_type.e = recode(trial_type, !!!trial_types),
+    error = rnorm(nrow(.), 0, error_sd),
+    RT = mu + effect*trial_type.e + error
+  )
+```
+
+Debug outside session. Seems an esoteric error.
+
+
+## power calc
+
+Contrast coding tutorial: https://debruine.github.io/faux/articles/contrasts.html
+
+```{r}
+n_a = 20
+n_b = 25
+intercept = 10
+effect = 1
+sigma = 2
+
+
+# simulate data
+simdat <- tibble(
+  id = 1:(n_a + n_b),
+  grp = rep(c("A", "B"), c(n_a, n_b)),
+) %>%
+  mutate(grp.e = recode(grp, A = -0.5, B = +0.5),
+         error = rnorm(n = n_a + n_b, mean = 0, sd = sigma),
+         dv = intercept + (effect * grp.e) + error) %>%
+  print()
+```
+
+
+```{r}
+## check data
+
+ggplot(simdat, aes(x = grp, y = dv)) +
+  geom_violin() +
+  stat_summary()
+```
+
+
+```{r}
+## analyse
+
+mod <- lm(dv ~ grp.e, data = simdat)
+summary(mod)
+
+intercept <- mod$coefficients[["(Intercept)"]]
+effect <- mod$coefficients[["grp.e"]]
+sigma <- sigma(mod)
+```
+
+
+```{r}
+# calculate power - get relevant p-value
+pvals <- broom::tidy(mod) %>%
+  pull(p.value)
+
+pvals[[2]]
+```
+
+
+
+```{r}
+mysim <- function(n_a, n_b,
+                  intercept = 10,
+                  effect = 1,
+                  sigma = 2) {
+  # simulate data
+  simdat <- tibble(id = 1:(n_a + n_b),
+                   grp = rep(c("A", "B"), c(n_a, n_b))) %>%
+    mutate(
+      grp.e = recode(grp, A = -0.5, B = +0.5),
+      error = rnorm(n = n_a + n_b, mean = 0, sd = sigma),
+      dv = intercept + (effect * grp.e) + error
+    )
+  
+  # analyse
+  mod <- lm(dv ~ grp.e, data = simdat)
+  
+  # return p-value
+  pvals <- broom::tidy(mod) %>%
+    pull(p.value)
+
+  return(pvals[[2]])
+}
+
+pvals <- replicate(100, mysim(n_a = 75, n_b = 70))
+alpha <- 0.025
+power <- mean(pvals < alpha) %>% print()
+```
+
+## power iterator
+
+```{r}
+mypow <- function(a, b, reps = 100) {
+  pvals <- replicate(reps, mysim(n_a = a, n_b = b))
+  alpha <- 0.025
+  power <- mean(pvals < alpha)
+  
+  return(power)
+}
+
+
+pwer_grid <- crossing(
+  a = seq(50, 100, by = 10),
+  b = seq(50, 100, by = 10)
+) %>%
+  rowwise(a, b) %>%
+  mutate(power = mypow(a, b, 100))
+```
+
+```{r}
+ggplot(pwer_grid, aes(x = a, y = b, fill = power)) +
+  geom_tile() +
+  geom_text(aes(label = power), color = "white")
+```
+
+
+
+
+
