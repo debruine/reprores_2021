@@ -16,7 +16,7 @@ Likely to be cancelled due to the strike action. Get the latest info at the [Gla
 
 ## Class 09 (2021-11-26)
 
-* [Recording]()
+* [Recording](https://uofglasgow.zoom.us/rec/share/Xq2aGJvTg7uqOZikMet2QkrB4hC1BgtUGU26UY2miu7uYy022kTRCGhJl9pUL0Tl.HPFL-LWf4azPoNba)
 * [Poll 9](https://debruine.github.io/reprores_2021/polls/poll-09.html)
 * [Today's script](https://github.com/debruine/reprores_2021/blob/master/exercises/09_func_exercise.Rmd)
 

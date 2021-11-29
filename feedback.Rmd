@@ -15,7 +15,7 @@ options(gargle_oauth_email = "debruine@gmail.com")
 ```{r}
 # read data
 url <- "1mZlGcQecowigXVUN_0HsnLPEpSaE0tXfoCfw6Lvv2vQ"
-data <- purrr::map_df(paste0("Week", 3:7), function(sheet) {
+data <- purrr::map_df(paste0("Week", 3:9), function(sheet) {
     data <- read_sheet(url, sheet) %>%
       select(feedback = starts_with("General feedback")) %>%
       mutate(week = sheet, feedback = as.character(feedback)) %>%
