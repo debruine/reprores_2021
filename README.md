@@ -14,6 +14,11 @@ These will be at the class Zoom link
 
 Likely to be cancelled due to the strike action. Get the latest info at the [Glasgow UCU](https://ucuglasgow.wordpress.com/) site.
 
+## Extra Help (2021-11-29)
+
+* [Recording](https://uofglasgow.zoom.us/rec/share/pP1jOIM-gjwhrNQUi8N391vv8EnGbLMKZDXxYqheFB00y2HJ8WMqPgA-PBmuIH_h.IX01l1NIJYuK6E9l)
+* [Script](https://github.com/debruine/reprores_2021/blob/master/exercises/extra-help_2021-11-29.Rmd)
+
 ## Class 09 (2021-11-26)
 
 * [Recording](https://uofglasgow.zoom.us/rec/share/Xq2aGJvTg7uqOZikMet2QkrB4hC1BgtUGU26UY2miu7uYy022kTRCGhJl9pUL0Tl.HPFL-LWf4azPoNba)

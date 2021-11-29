@@ -120,8 +120,8 @@ power <- mean(pvals < alpha) %>% print()
 ## power iterator
 
 ```{r}
-mypow <- function(effect, reps = 100) {
-  pvals <- replicate(reps, mysim(n_a = 25, n_b = 25, effect = effect))
+mypow <- function(a, b, reps = 100) {
+  pvals <- replicate(reps, mysim(n_a = a, n_b = b))
   alpha <- 0.025
   power <- mean(pvals < alpha)
   
@@ -180,5 +180,22 @@ map_df(1:100, ~toyfunc()) %>%
 ```
 
 
+```{r, echo = FALSE, results='asis'}
+a <- 1.999
+sprintf("The value of a is %.2f", a) %>% cat()
+```
+
+
+```{r, echo = FALSE, results='asis'}
+glue::glue("The value of a is {aa}",
+           aa = sprintf("%.2f", a))
+```
+
+```{r, echo = FALSE}
+a2 <- sprintf("%.2f", a)
+```
+
+
+The value of a is `r a2`.
 
 
