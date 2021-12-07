@@ -1,0 +1,181 @@
+---
+title: "Extra Help"
+author: "Lisa DeBruine"
+date: "07/12/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+```
+
+## Joining Datasets
+
+### Row binding
+
+add together data with the same structure
+
+```{r}
+a1 <- tibble(
+  id = 1:10,
+  dv = rnorm(10)
+) %>%
+  mutate(condition = "A")
+
+a2 <- tibble(
+  id = 11:20,
+  dv = rnorm(10)
+) %>%
+  mutate(condition = "B")
+```
+
+```{r}
+a <- bind_rows(a1, a2)
+```
+
+### joining
+
+```{r}
+b <- tibble(
+  id = sample(0:19),
+  version = sample(c("x", "y"), 20, TRUE)
+)
+```
+
+```{r}
+x <- inner_join(a, b, by = "id")
+```
+
+## Which functions which library
+
+```{r}
+?pivot_wider
+```
+
+## time-consuming functions
+
+- run functions in an external script or in an unevaluated code chunk and save results to CSV or RData
+
+```{r, eval = FALSE}
+# long code
+simfunc <- function(n) {
+
+}
+
+analysis <- function(data) {
+
+}
+
+
+p <- replicate(100, analysis())
+
+results_table <- tibble(
+  n = seq(100, 1000, by = 100),
+  power = seq(.2, .9, length.out = 10)
+)
+
+save(results_table, file = "results_table.RData")
+# save as RData
+```
+
+Then load
+
+```{r}
+# load data created by script.R
+load("results_table.RData")
+```
+
+## Demographic summary tables with NAs
+
+```{r}
+demog <- tibble(
+  id = 1:5,
+  age = c(20, 20, 21, NA, 19)
+)
+
+summarise(demog, n = n(), 
+          missing_age = sum(is.na(age)),
+          has_age = sum(!is.na(age)),
+          age = mean(age, na.rm = TRUE))
+```
+
+## power.t.test for checking
+
+```{r}
+power.t.test(
+  #n = 500, # n from your simulation
+  delta = 1.5, # difference between groups
+  sd = 5.3, # calculate from pilot data
+  sig.level = 0.01, # alpha
+  type = "two.sample",
+  power = 0.9
+)
+```
+
+## Slow computer
+
+Use smaller number of iterations to narrow down the range of n to search over.
+
+Use https://rstudio.psy.gla.ac.uk if your laptop is very slow.
+
+```{r}
+power.t.test(
+  n = 370, # n from your simulation
+  delta = 1.5, # difference between groups
+  sd = 5.3, # calculate from pilot data
+  sig.level = 0.01, # alpha
+  type = "two.sample"
+)
+```
+
+
+```{r}
+m <- lm(mpg ~ vs, mtcars)
+
+summary(m)
+```
+
+get values for reporting from broom::tidy.
+
+```{r}
+vs <- broom::tidy(m, conf.int = TRUE) %>%
+  filter(term == "vs")
+
+vs_est <- sprintf("%.2f", vs$estimate)
+vs_se <- sprintf("%.2f", vs$std.error)
+vs_ci <- sprintf("95%% CI = [%.2f, %.2f]", 
+                 vs$conf.low,
+                 vs$conf.high)
+vs_t <- sprintf("t = %.2f", vs$statistic)
+
+if (vs$p.value < .001) {
+  vs_p <- "p < .001"
+} else {
+  vs_p <- sprintf("p = %.3f", vs$p.value)
+}
+```
+
+
+The main effect of vs had an estimate of `r vs_est` (`r vs_ci`), which was significant (`r vs_t`, `r vs_p`). This indicates that group 1 had, on average, `r vs_est` mpg higher mileage per gallon than group 0.
+
+
+The main effect of vs was significant (t = `r vs_t`, `r vs_p`), such that group 1 had, on average, `r vs_est` mpg (SE = `r vs_se`) higher mileage per gallon than group 0.
+
+
+## How do you know what direction the group effects are in?
+
+```{r}
+mtcars %>%
+  group_by(vs) %>%
+  summarise(m = mean(mpg))
+```
+
+```{r}
+x <- tibble(id = 1:10)
+save(x, file = "table.RData")
+load("table.RData")
+
+table <- "table.RData"
+```
+

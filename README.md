@@ -9,10 +9,16 @@ These will be at the class Zoom link
 - Friday Dec 10, 10-12
 - office hours or by appointment
 
+## Extra Help (2021-12-07)
+
+* [Recording](https://uofglasgow.zoom.us/rec/share/rujEa1vgPZHGEtB-wTuxmDiZ41vH9I6ma4V3SMLwZ06Gbybu6EAEvEsrJpQGMQhB.NVv8J-SEK862O22u)
+* [Script](https://github.com/debruine/reprores_2021/blob/master/exercises/extra-help_2021-12-07.Rmd)
+
+
 
 ## Class 10 (2011-12-03)
 
-Likely to be cancelled due to the strike action. Get the latest info at the [Glasgow UCU](https://ucuglasgow.wordpress.com/) site.
+Cancelled due to the strike action. Get the latest info at the [Glasgow UCU](https://ucuglasgow.wordpress.com/) site.
 
 ## Extra Help (2021-11-29)
 
