@@ -9,6 +9,11 @@ These will be at the class Zoom link
 - Friday Dec 10, 10-12
 - office hours or by appointment
 
+## Extra Help (2021-12-10)
+
+* [Recording]()
+* [Script](https://github.com/debruine/reprores_2021/blob/master/exercises/extra-help_2021-12-10.Rmd)
+
 ## Extra Help (2021-12-07)
 
 * [Recording](https://uofglasgow.zoom.us/rec/share/rujEa1vgPZHGEtB-wTuxmDiZ41vH9I6ma4V3SMLwZ06Gbybu6EAEvEsrJpQGMQhB.NVv8J-SEK862O22u)

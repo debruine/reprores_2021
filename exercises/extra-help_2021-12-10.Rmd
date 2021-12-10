@@ -1,0 +1,155 @@
+---
+title: "Extra Help 3"
+author: "Lisa DeBruine"
+date: "10/12/2021"
+bibliography: mybib.bib
+output: 
+  bookdown::html_document2:
+    df_print: paged
+    toc: true
+    toc_float: true
+    number_sections: false
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+set.seed(1)
+```
+
+See Figure \@ref(fig:power).
+
+See Table \@ref(tab:demo-table).
+
+## Inline R code
+
+```{r}
+set.seed(1)
+rnorm(1, 10)
+```
+
+```{r}
+set.seed(1)
+rnorm(1)
+```
+
+Do not set seed inside a function or loop
+
+```{r}
+set.seed(8675309)
+
+simdat <- function(n) {
+  tibble(
+    id = 1:n,
+    dv = rnorm(n, mean = 0.5, sd = 1)
+  )
+}
+
+p <- replicate(100, lm(dv ~ 1, simdat(n = 34)) %>%
+  broom::tidy() %>%
+  pull(p.value))
+
+mean(p < .05)
+```
+
+```{r demo-table}
+simdat(5) %>%
+  kableExtra::kable(caption = "Demo table")
+```
+
+
+
+Sense check
+
+```{r}
+power.t.test(delta = 0.5, 
+             sd = 1, 
+             sig.level = 0.05, 
+             power = .8,
+             type = "one.sample")
+```
+
+
+## systematic exploration of n
+
+```{r}
+anafunc <- function(n, reps = 100) {
+  p <- replicate(reps, lm(dv ~ 1, simdat(n)) %>%
+    broom::tidy() %>%
+    pull(p.value))
+  
+  mean(p < .05)
+}
+
+anafunc(34)
+```
+
+
+```{r}
+n <- seq(10, 100, by = 10)
+
+power <- map_dbl(n, anafunc, reps = 10)
+
+plot(x = n, y = power)
+```
+
+
+```{r, eval = FALSE}
+# simulation takes a very long time
+
+n <- seq(30, 40, by = 1)
+
+power <- map_dbl(n, anafunc, reps = 10000)
+
+plot(x = n, y = power)
+
+power_table <- tibble(n = n, power = power)
+
+write_csv(power_table, "power_table.csv")
+```
+
+```{r power, echo = FALSE, fig.cap = "Power for n from 30 to 40 @reprores"}
+power_table <- read_csv("power_table.csv", show_col_types = FALSE)
+
+ggplot(power_table, aes(x = n, y = power)) +
+  geom_hline(yintercept = 0.8) +
+  geom_smooth() + 
+  geom_point()
+```
+
+
+### Citations
+
+```{r}
+citation("reprores") %>% toBibtex()
+```
+
+
+MLM paper is by @barr2013random. 
+
+We ran MLM [@barr2013random].
+
+Barr and colleagues [-@barr2013random].
+
+We used a book by @reprores.
+
+## References
+
+<div id = "refs"></div>
+
+## Appendix A
+
+
+
+```{r}
+# get parameters from data
+score_mean <- mean(mtcars$mpg)
+score_sd <- sd(mtcars$mpg)
+
+# use parameters in sim function
+simfunc <- function() {
+  tibble(dv = rnorm(n, mean = score_mean, sd = score_sd))
+}
+```
+
+
