@@ -11,7 +11,7 @@ These will be at the class Zoom link
 
 ## Extra Help (2021-12-10)
 
-* [Recording]()
+* [Recording](https://uofglasgow.zoom.us/rec/share/aBn0E9cU3jQi5opxEpAXmRaZ2nXOCMkFjHV8ZkzDL_AibK-zGbaUdgcaeSoKPKXd.TabEGGav6DKYl4n1)
 * [Script](https://github.com/debruine/reprores_2021/blob/master/exercises/extra-help_2021-12-10.Rmd)
 
 ## Extra Help (2021-12-07)
