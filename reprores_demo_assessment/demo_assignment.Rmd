@@ -1,0 +1,269 @@
+---
+title: "Reproducible Report Demo"
+author: "Lisa DeBruine"
+bibliography: biblio.bib
+output: 
+  bookdown::html_document2:
+    toc: true
+    toc_float: true
+    number_sections: false
+    df_print: kable
+    theme: 
+      version: 4
+      bootswatch: journal
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE,
+                      warning = TRUE,
+                      message = TRUE)
+
+library(tidyverse)
+library(kableExtra)
+
+theme_set(theme_bw())
+```
+
+
+```{r}
+# load questionnaire data
+
+data_quest_raw <- read_csv("data/questions.csv", 
+                           show_col_types = FALSE)
+
+## reverse-code questions
+
+# straighforward but tedious
+data_quest_rev <- data_quest_raw %>%
+  mutate(q02R = 8 - q02R,
+         q04R = 8 - q04R,
+         q06R = 8 - q06R,
+         q08R = 8 - q08R,
+         q10R = 8 - q10R,
+         q12R = 8 - q12R,
+         q14R = 8 - q14R)
+
+# fancier but more extendable
+data_quest_rev <- data_quest_raw %>%
+  pivot_longer(cols = -(subj_id)) %>%
+  separate(col = name, into = c("q", "rev"), sep = -1) %>%
+  mutate(rev_score = ifelse(rev == "R", 8 - value, value))
+  
+  
+## create summary disgust score
+data_quest_summary <- data_quest_rev %>%
+  group_by(subj_id) %>%
+  summarise(score = sum(rev_score))
+
+```
+
+
+```{r}
+## load subject data
+
+subj_A1 <- read_csv("data/subjects_condition-A_version-1.csv",
+                    na = c("NA", "missing"), show_col_types = FALSE) %>%
+  mutate(condition = "A", version = "One")
+subj_A2 <- read_csv("data/subjects_condition-A_version-2.csv",
+                    na = c("NA", "missing"), show_col_types = FALSE) %>%
+  mutate(condition = "A", version = "Two")
+subj_B1 <- read_csv("data/subjects_condition-B_version-1.csv",
+                    na = c("NA", "missing"), show_col_types = FALSE ) %>%
+  mutate(condition = "B", version = "One")
+subj_B2 <- read_csv("data/subjects_condition-B_version-2.csv",
+                    na = c("NA", "missing"), show_col_types = FALSE) %>%
+  mutate(condition = "B", version = "Two")
+
+## join subject data
+
+data_subj <- bind_rows(subj_A1, subj_A2, subj_B1, subj_B2)
+```
+
+```{r}
+# join all data
+data_all <- full_join(data_subj, data_quest_summary, by = "subj_id")
+
+# exclude subjects with missing language, score, or condition
+data_analysis <- data_all %>%
+  filter(language == "monolingual", 
+         !is.na(score), 
+         !is.na(condition)) %>%
+  mutate(condition.e = recode(condition, A = -0.5, B = 0.5))
+```
+
+```{r}
+total_n <- nrow(data_all)
+included_n <- nrow(data_analysis)
+excluded_n <- total_n - included_n
+```
+
+
+
+## Intro
+
+The study asked `r total_n` subjects to complete a 15-item disgust scale and report their age, gender, and whether they were monolingual or bilingual. Subjects were in one of two conditions (A or B) and one of two versions (One or Two). 
+
+The script uses the following packages: tidyverse [@tidyverse].
+
+## Demographics
+
+### Full Data Set
+
+See Table \@ref(tab:demog-all).
+
+```{r demog-all}
+# table of N per condition/version/language
+data_all %>%
+  count(condition, version, language) %>%
+  pivot_wider(names_from = language, 
+              values_from = n) %>%
+  mutate(total = bilingual + monolingual) %>%
+  kable(caption = "The number of bilingual and monolingial subjects per conditon and version in the full data set (pre-exclusions).") %>%
+  kable_minimal()
+```
+
+
+#### Age 
+
+Figure \@ref(fig:age-plot) shows that the age distributions were roughly similar between conditions, versions, and languages.
+
+```{r age-plot, fig.cap="Age distributions by language, condition, and version", warning=FALSE}
+ggplot(data_all, aes(x = age, color = language)) +
+  geom_freqpoly(binwidth = 1) +
+  facet_grid(version~condition, labeller = label_both)
+```
+
+#### Gender
+
+```{r}
+gender <- data_all %>% count(gender)
+```
+
+
+There were no obvious differences in the gender distribution between languages, conditions, and versions. However, there were more men (`r gender$n[[2]]`) than women (`r gender$n[[1]]`), non-binary people (`r gender$n[[3]]`), and people who did not answer the gender question (`r gender$n[[4]]`).
+
+```{r gender-plot, fig.cap="Gender by language, condition, and version"}
+ggplot(data_all, aes(x = gender, fill = language)) +
+  geom_bar(position = "dodge") +
+  facet_grid(version~condition, labeller = label_both)
+```
+
+
+### Exclusions
+
+Because we were only looking at the effect of condition on disgust score for monolingual subjects, we excluded `r excluded_n` subjects who were bilingual or had missing disgust scores, leaving `r included_n` subjects for the analysis. 
+
+```{r demog-subset}
+# table of N per condition/version/language
+data_analysis %>%
+  count(condition, version) %>%
+  kable(caption = "The number of subjects per conditon and version in the analysed data set (post-exclusions).") %>%
+  kable_minimal()
+```
+
+
+#### Age 
+
+Figure \@ref(fig:age-subplot) shows that the age distributions were roughly similar between conditions and versions.
+
+```{r age-subplot, fig.cap="Age distributions by language, condition, and version", warning=FALSE}
+ggplot(data_analysis, aes(x = age)) +
+  geom_freqpoly(binwidth = 1, color = "#01BFC4") +
+  facet_grid(version~condition, labeller = label_both)
+```
+
+#### Gender
+
+```{r}
+sub_gender <- data_analysis %>% count(gender)
+```
+
+
+The gender distribution between conditions and versions showed that there were more women in cndition B than condition A. There were more men (`r sub_gender$n[[2]]`) than women (`r sub_gender$n[[1]]`), non-binary people (`r sub_gender$n[[3]]`), and people who did not answer the gender question (`r sub_gender$n[[4]]`).
+
+```{r gender-subplot, fig.cap="Gender by language, condition, and version"}
+ggplot(data_analysis, aes(x = gender)) +
+  geom_bar(fill = "#01BFC4") +
+  facet_grid(version~condition, labeller = label_both)
+```
+
+## Analysis
+
+
+```{r analysis-viz, fig.cap = "Disgust scores by condition for the monolingual subjects. The dot is the mean and error bars represent the 95% CI."}
+ggplot(data_analysis, aes(x = condition, y = score)) +
+  geom_violin() +
+  stat_summary(fun.data = "mean_cl_boot") +
+  ylab("Disgust Score")
+```
+
+Condition was effect-coded such that condition A = -0.5 and condition B = 0.5.
+
+```{r lm}
+model <- lm(score ~ condition.e, data = data_analysis)
+stats <- broom::tidy(model, conf.int = TRUE, conf.level = 0.95)
+
+t_val <- stats$statistic[[2]] %>% round(2)
+p_val <- stats$p.value[[2]] %>% round(2)
+condition_effect <- stats$estimate[[2]] %>% round(2)
+
+stats %>%
+  mutate(CI = sprintf("[%.2f -- %.2f]", conf.low, conf.high)) %>%
+  select(-conf.low, -conf.high) %>%
+  kable(digits = 2,
+        col.names = c("Term", "Estimate", "SE", "t-value", "p-value", "95% CI"),
+        caption = "Results of the linear model predicting disgust score from condition.") %>%
+  kable_minimal()
+
+```
+
+The analysis showed that, although disgust scores in condition B were on average `r condition_effect` points larger than in condition B, the conditions were not significantly different (t = `r t_val`, p = `r p_val`).
+
+## Power
+
+Here I determined the sample size needed to have 85% power to detect a 0.5-point difference between the levels of condition with an alpha criterion of 0.01.
+
+Here, we assume an equal number of people in conditions A and B. 
+
+```{r}
+# define constants
+target_power <- .85
+target_effect <- 0.5
+target_alpha <- 0.01
+sigma <- sigma(model)
+model_int <- stats$estimate[[1]]
+
+# power function
+powersim <- function(n_per_condition) {
+  ## simulate data with these parameters
+  data_sim <- tibble(
+    subj_id = 1:(n_per_condition*2),
+    condition = rep(c("A", "B"), each = n_per_condition)
+  ) %>%
+    mutate(condition.e = recode(condition, A = -0.5, B = 0.5),
+           error = rnorm(2*n_per_condition, mean = 0, sd = sigma),
+           score = model_int + (condition.e * target_effect) + error
+           )
+  
+  sim_model <- lm(score ~ condition.e, data = data_sim)
+  sim_stats <- broom::tidy(sim_model)
+  p <- sim_stats$p.value[[2]]
+  
+  return(p)
+}
+```
+
+
+```{r}
+# power analysis
+set.seed(8675309)
+n <- 16000
+sim_p <- replicate(500, powersim(n))
+power <- mean(sim_p < target_alpha)
+```
+
+Power analysis by simulation showed that you need approximately `r n` subjects per condition for a power of `r power*100`%.
+
+## References
+
+

@@ -91,3 +91,26 @@ purrr::pmap(students, random_project) -> projects
 ```
 
 
+```{r}
+missing <- c(105066058,
+105066059,
+105066060,
+105066063,
+105066067,
+105066073,
+105066081,
+105066085,
+105066086,
+105066093,
+105066098,
+105147977)
+
+filter(students, moodle_id %in% missing) %>%
+  pull(student_id) %>%
+  paste0(c("w", "a", "s", "m", "m",
+           "s", "j", "l", "i", "p", "c"), "@student.gla.ac.uk") %>%
+  paste(collapse = ", ") %>% cat()
+```
+
+
+

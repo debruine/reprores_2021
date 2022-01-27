@@ -1,5 +1,10 @@
 # ReproRes 2021
 
+## Assessment Walk-through (2022-01-27)
+
+* [Recording]()
+* [Script](https://github.com/debruine/reprores_2021/blob/master/reprores_demo_assessment.zip) (.zip file)
+
 ## Extra Help Sessions
 
 These will be at the class Zoom link
