@@ -2,7 +2,7 @@
 
 ## Assessment Walk-through (2022-01-27)
 
-* [Recording]()
+* [Recording](https://uofglasgow.zoom.us/rec/share/ZJx3UkGIS8akBHUTKDuUAavfVQtwR9d0-C-Su38B3LKjAydiFldl3qoPMkhelIk6.4bhj-nPL4WgAD5K2)
 * [Script](https://github.com/debruine/reprores_2021/blob/master/reprores_demo_assessment.zip) (.zip file)
 
 ## Extra Help Sessions
